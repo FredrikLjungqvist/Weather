@@ -5,7 +5,6 @@ import { Route } from 'react-router-dom';
 import StartView from '../../Pages/StartView'
 import ForecastView from '../../Pages/ForecastView'
 import ForecastDetailView from '../../Pages/ForecastDetailView'
-import Regn from './regn.png'
 import Footer from '../Footer'
 
 
@@ -22,7 +21,6 @@ export default class Layout extends Component {
     return (
       <Container style={styles} maxWidth="lg" >
         <Header />
-        <img src={Regn} alt="aa" />
         <Route path="/" exact>
           <StartView />
         </Route>
