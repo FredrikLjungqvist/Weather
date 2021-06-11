@@ -6,6 +6,8 @@ import StartView from '../../Pages/StartView'
 import ForecastView from '../../Pages/ForecastView'
 import ForecastDetailView from '../../Pages/ForecastDetailView'
 import Regn from './regn.png'
+import Footer from '../Footer'
+
 
 const styles: CSSProperties = {
   display: "flex",
@@ -32,7 +34,7 @@ export default class Layout extends Component {
         <Route path="/forecastdetail">
           <ForecastDetailView />
         </Route>
-
+        <Footer />
       </Container >
     )
   }
