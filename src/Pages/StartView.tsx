@@ -12,7 +12,7 @@ const StartView = () => {
   }
 
   return (
-    <div >
+    <div style={styles} >
       <h1>StartView</h1>
       <CurrentWeather />
 
