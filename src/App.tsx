@@ -4,6 +4,7 @@ import Layout from './components/UI/Layout'
 import { CssBaseline } from '@material-ui/core'
 import { BrowserRouter } from 'react-router-dom';
 
+
 function App() {
   return (
     <>
@@ -12,6 +13,7 @@ function App() {
           <Layout />
         </BrowserRouter>
       </CssBaseline>
+
     </>
   );
 }

@@ -5,6 +5,7 @@ import { Route } from 'react-router-dom';
 import StartView from '../../Pages/StartView'
 import ForecastView from '../../Pages/ForecastView'
 import ForecastDetailView from '../../Pages/ForecastDetailView'
+import Footer from '../Footer'
 
 
 const styles: CSSProperties = {
@@ -31,7 +32,7 @@ export default class Layout extends Component {
         <Route path="/forecastdetail">
           <ForecastDetailView />
         </Route>
-
+        <Footer />
       </Container >
     )
   }
