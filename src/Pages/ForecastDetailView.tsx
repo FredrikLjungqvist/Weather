@@ -10,7 +10,6 @@ const styles: CSSProperties = {
 const ForecastDetailView = () => {
   return (
     <div style={styles}>
-      <h1>Forecast Detail</h1>
       <CityForecastDetails />
     </div>
   )
