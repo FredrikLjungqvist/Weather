@@ -1,5 +1,6 @@
 import React from 'react'
 import myArray from '../citys'
+import { Link } from 'react-router-dom'
 
 const ForecastView = () => {
   return (

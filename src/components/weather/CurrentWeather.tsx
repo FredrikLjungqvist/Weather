@@ -14,7 +14,6 @@ const useStyles = makeStyles({
   },
 });
 
-
 export default function CurrentWeather() {
   const classes = useStyles();
   return (
@@ -25,11 +24,11 @@ export default function CurrentWeather() {
           <CardContent className={classes.root}>
             <Typography gutterBottom variant="h1" component="h2">
               Göteborg
-          </Typography>
+            </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
               Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
               across all continents except Antarctica
-          </Typography>
+            </Typography>
           </CardContent>
         </CardActionArea>
         <CardActions>
