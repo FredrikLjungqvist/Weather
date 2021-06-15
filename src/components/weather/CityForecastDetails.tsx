@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useContext, useEffect, useMemo } from 'react'
 import { Container, Paper, TableContainer, Table, TableHead, TableCell, TableRow, TableBody, Hidden } from '@material-ui/core'
-
+import WeatherContext from '../../context/weather-context'
 
 interface WeatherDetails {
   id: number
@@ -89,14 +89,33 @@ const dummy_data: WeatherDetails[] = [
   },
 ]
 
-
+const array = [
+  {
+    long: 16.158,
+    lat: 58.5812,
+  },
+  {
+    long: 16.158,
+    lat: 58.5812,
+  },
+  {
+    long: 16.158,
+    lat: 58.5812,
+  },
+]
 
 const CityForecastDetails = () => {
 
+  const ctx = useContext(WeatherContext)
 
+  useEffect(() => {
+    ctx.makeRequest(array)
 
+  }, [])
 
-
+  if (ctx.weatherData.length > 0) {
+    console.log(ctx.weatherData[0].positionDataOne.timeSeries)
+  }
 
 
   const datum = new Date(dummy_data[0].date)

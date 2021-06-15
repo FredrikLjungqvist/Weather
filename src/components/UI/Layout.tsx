@@ -8,12 +8,16 @@ import ForecastDetailView from '../../Pages/ForecastDetailView'
 import Footer from '../Footer'
 
 
+
+
 const styles: CSSProperties = {
   display: "flex",
   marginTop: 72
 }
 
 export default class Layout extends Component {
+
+
 
   render() {
     return (
