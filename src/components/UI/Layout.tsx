@@ -11,7 +11,6 @@ import Footer from '../Footer'
 const styles: CSSProperties = {
   display: "flex",
   flexDirection: "column",
-  alignItems: "center",
   marginTop: 72
 }
 
@@ -19,7 +18,7 @@ export default class Layout extends Component {
 
   render() {
     return (
-      <Container style={styles} maxWidth="lg" >
+      <Container style={styles} maxWidth="lg" disableGutters>
         <Header />
         <Route path="/" exact>
           <StartView />
@@ -29,7 +28,7 @@ export default class Layout extends Component {
           <ForecastView />
         </Route>
 
-        <Route path="/forecastdetail">
+        <Route path="/forecastdetail/">
           <ForecastDetailView />
         </Route>
         <Footer />
