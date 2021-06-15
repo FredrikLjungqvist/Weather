@@ -4,7 +4,7 @@ import React, { CSSProperties } from 'react'
 const styles: CSSProperties = {
   display: "flex",
   flexDirection: "column",
-  alignItems: "center"
+
 }
 
 const ForecastDetailView = () => {

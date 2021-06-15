@@ -1,6 +1,6 @@
 import React from 'react'
-import { Paper, TableContainer, Table, TableHead, TableCell, TableRow, TableBody } from '@material-ui/core'
-import { useParams } from 'react-router-dom'
+import { Paper, TableContainer, Table, TableHead, TableCell, TableRow, TableBody, Hidden } from '@material-ui/core'
+
 
 interface WeatherDetails {
   id: number
@@ -95,15 +95,11 @@ const CityForecastDetails = () => {
 
 
 
-  const params: any = useParams();
-
-  console.log(params.currentDate)
-  console.log(dummy_data[0].date.substring(0, 10))
-
-  const currentList = dummy_data.filter((day) => day.date.substring(0, 10) === params.currentDate)
 
 
-  const datum = new Date(currentList[0].date)
+
+
+  const datum = new Date(dummy_data[0].date)
 
   datum.toLocaleDateString("se-SE", { month: 'long' })
 
@@ -114,19 +110,21 @@ const CityForecastDetails = () => {
       <h1>Göteborg</h1>
       <h4>{datum.toLocaleString("se-SE", { weekday: "short", day: "numeric", month: 'long' })}</h4>
       <TableContainer component={Paper} >
-        <Table size="small" aria-label="simple table">
+        <Table padding="none" size="small" aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell align="center">Tid</TableCell>
               <TableCell align="center">Väder</TableCell>
-              <TableCell align="center">Temperatur</TableCell>
+              <TableCell align="center">Temp</TableCell>
               <TableCell align="center">Nederbörd</TableCell>
               <TableCell align="center">Vind</TableCell>
-              <TableCell align="center">Luftfuktighet</TableCell>
+              <Hidden xsDown>
+                <TableCell align="center">Luftfuktighet</TableCell>
+              </Hidden>
             </TableRow>
           </TableHead>
           <TableBody>
-            {currentList.map((row) => (
+            {dummy_data.map((row) => (
               <TableRow key={row.id}>
                 <TableCell align="center" component="th" >
                   {new Date(row.date).getHours()}
@@ -139,7 +137,9 @@ const CityForecastDetails = () => {
                 </TableCell>
                 <TableCell align="center">{row.precipitation} mm</TableCell>
                 <TableCell align="center">{row.windSpeed} m/s</TableCell>
-                <TableCell align="center">{row.humidity} %</TableCell>
+                <Hidden xsDown>
+                  <TableCell align="center">{row.humidity} %</TableCell>
+                </Hidden>
               </TableRow>
             ))}
           </TableBody>
