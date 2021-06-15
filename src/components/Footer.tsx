@@ -75,11 +75,6 @@ const Footer = () => {
 
             <p>Systemutveckling, Ramverk. Made by Grupp 3 <a href="https://medieinstitutet.se/">@MedieInstitutet </a>WIE20G</p>
 
-      </div>
-    )  
-}
-
-
 const styles: CSSProperties = {
     position: 'fixed',
     bottom: 0,   
