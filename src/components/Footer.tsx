@@ -73,7 +73,12 @@ const Footer = () => {
   return(
         <div style = {styles}>
 
-            <p>Systemutveckling, Ramverk. Made by Grupp 3 <a href="https://medieinstitutet.se/">@MedieInstitutet WIE20G</a></p>
+            <p>Systemutveckling, Ramverk. Made by Grupp 3 <a href="https://medieinstitutet.se/">@MedieInstitutet </a>WIE20G</p>
+
+      </div>
+    )  
+}
+
 
 const styles: CSSProperties = {
     position: 'fixed',
