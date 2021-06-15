@@ -28,7 +28,7 @@ export default class Layout extends Component {
           <ForecastView />
         </Route>
 
-        <Route path="/forecastdetail/:currentDate">
+        <Route path="/forecastdetail/">
           <ForecastDetailView />
         </Route>
         <Footer />
