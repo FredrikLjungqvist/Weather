@@ -10,7 +10,6 @@ import Footer from '../Footer'
 
 const styles: CSSProperties = {
   display: "flex",
-  flexDirection: "column",
   marginTop: 72
 }
 
