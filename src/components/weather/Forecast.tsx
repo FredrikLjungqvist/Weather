@@ -6,12 +6,9 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 
 import Typography from '@material-ui/core/Typography';
-import { ContainerClassKey } from "@material-ui/core";
+
 import Container from '@material-ui/core/Container';
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
   Link
 } from "react-router-dom";
 
@@ -49,14 +46,14 @@ const useStyles = makeStyles({
 });
 
 
-interface mock {
+interface Mock {
   day: string,
   tempmax: number,
   tempmin: number,
   symbol: number,
   date: string,
 }
-const mock: mock[] = [{
+const mock: Mock[] = [{
   day: 'monday',
   tempmax: 20,
   tempmin: 10,
@@ -72,7 +69,7 @@ const mock: mock[] = [{
 }]
 const Forecast = () => {
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
+  /* const bull = <span className={classes.bullet}>•</span>; */
 
 
 

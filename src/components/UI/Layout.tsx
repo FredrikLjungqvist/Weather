@@ -21,21 +21,25 @@ export default class Layout extends Component {
 
   render() {
     return (
-      <Container style={styles} maxWidth="lg" disableGutters>
+      <>
         <Header />
-        <Route path="/" exact>
-          <StartView />
-        </Route>
+        <Container style={styles} maxWidth="lg" disableGutters>
+          <Route path="/" exact>
+            <StartView />
+          </Route>
 
-        <Route path="/forecast">
-          <ForecastView />
-        </Route>
+          <Route path="/forecast">
+            <ForecastView />
+          </Route>
 
-        <Route path="/forecastdetail/">
-          <ForecastDetailView />
-        </Route>
+          <Route path="/forecastdetail/">
+            <ForecastDetailView />
+          </Route>
+        </Container >
+
         <Footer />
-      </Container >
+      </>
+
     )
   }
 }

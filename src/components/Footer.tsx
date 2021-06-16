@@ -1,13 +1,13 @@
-import { minHeight } from '@material-ui/system';
-import { black, white } from 'material-ui/styles/colors';
-import React from 'react';
+/* import { minHeight } from '@material-ui/system'; */
+/* import { black, white } from 'material-ui/styles/colors'; */
+/* import React from 'react'; */
 import { CSSProperties } from 'react';
 
 
-import { fade, makeStyles } from '@material-ui/core/styles';
+/* import { fade, makeStyles } from '@material-ui/core/styles'; */
 
 
-const useStyles = makeStyles((theme) => ({
+/* const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
@@ -60,11 +60,11 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
-}));
+})); */
 
 
 const Footer = () => {
-  const classes = useStyles();
+  /*  const classes = useStyles(); */
   return (
     <div style={styles}>
 
