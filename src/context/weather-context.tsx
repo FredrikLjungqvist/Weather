@@ -1,18 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-
-interface Coordinates {
-  coordinates: string
-}
+import {PositionData} from '../handlers/localstorageHandler'
 
 interface WeatherContextObj {
-  makeRequest: (array: Coordinates[]) => void;
+  getWeatherData: () => void;
+  getPositionData:(cityName:string) => any;
   weatherData: any;
-  isLoading: boolean
+  isLoading: boolean;
 }
 
 const WeatherContext = React.createContext<WeatherContextObj>({
-  makeRequest: () => { },
+  getWeatherData: () => { },
+  getPositionData: () => {},
   weatherData: [],
   isLoading: false
 })
@@ -25,7 +24,7 @@ export interface Weather {
   id: string;
   time: object;
   precipitation: number;
-  celsius: number;
+  temp: number;
   windSpeed: number;
   humidity: number;
   weatherSymbol: number;
@@ -37,12 +36,34 @@ export const WeatherContextProvider: React.FC<Props> = (props: Props) => {
 
   const fullWeatherList: Weather[] = [];
 
-  const makeRequest: (coor: Coordinates[]) => void = async (coor: Coordinates[]) => {
+  const getPositionData = async(cityName:string) => {
+    try{
+      const response = await fetch (`https://geocode.search.hereapi.com/v1/geocode?q=${cityName}&apiKey=sKubhZvMfER-j5D59nl1P9F04lNgeAsuKrKgOoVEstM`)
+      const positionData = await response.json()
+      console.log(positionData)
+    } catch(error) {
+      console.log(error)
+    }
+  }
+
+  const getLocalStorage = () => {
+    let data:string | null = localStorage.getItem("positions")
+    
+    if(data){
+       const storedPosition:PositionData[] = JSON.parse(data)
+       return storedPosition
+    }
+    return []
+  }
+  
+
+  const getWeatherData = async () => {
     setIsLoading(true)
     try {
+      const positions = getLocalStorage()
       const weatherList = await Promise.all(
-        coor.map(async (location) => {
-          const response = await fetch(location.coordinates)
+        positions.map(async (location) => {
+          const response = await fetch(`https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${location.long}/lat/${location.lat}/data.json`)
           return await response.json()
         })
       )
@@ -74,10 +95,17 @@ export const WeatherContextProvider: React.FC<Props> = (props: Props) => {
     setWeatherData(fullWeatherList)
   }
 
+  useEffect(() => {
+    getWeatherData()
+    getPositionData("Göteborg")
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <WeatherContext.Provider value={{
-      makeRequest: makeRequest,
-      weatherData: weatherData,
+      getWeatherData,
+      getPositionData,
+      weatherData,
       isLoading
     }}>
       {props.children}

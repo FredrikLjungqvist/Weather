@@ -1,19 +1,8 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext} from 'react'
 import { makeStyles, Container, TableContainer, Table, TableHead, TableCell, TableRow, TableBody, Hidden } from '@material-ui/core'
 import WeatherContext from '../../context/weather-context'
 
 
-const array = [
-  {
-    coordinates: `https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${16.158}/lat/${58.5812}/data.json`,
-  },
-  {
-    coordinates: `https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${16.158}/lat/${59.5812}/data.json`
-  },
-  {
-    coordinates: `https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${16.158}/lat/${60.5812}/data.json`
-  },
-]
 const useStyles = makeStyles({
   table: {
     maxWidth: 800,
@@ -26,12 +15,6 @@ const CityForecastDetails = () => {
   const loading = ctx.isLoading
 
 
-  useEffect(() => {
-    ctx.makeRequest(array)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-
   let filteredWeatherData;
   if (ctx.weatherData.length > 0) {
     const currentDate = new Date()
@@ -42,7 +25,7 @@ const CityForecastDetails = () => {
     <Container style={{ width: "100vw", display: "flex", alignItems: "center", flexDirection: "column" }} maxWidth='lg' disableGutters>
       {!loading && ctx.weatherData.length > 0 ?
         <>
-          < h1 > Göteborg</h1>
+          <h1>Göteborg</h1>
           <TableContainer className={classes.table}  >
             <Table padding="none" size="small" aria-label="simple table">
               <TableHead>
