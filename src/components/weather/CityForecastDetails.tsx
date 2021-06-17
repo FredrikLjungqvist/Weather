@@ -14,7 +14,6 @@ const CityForecastDetails = () => {
   const ctx = useContext(WeatherContext)
   const loading = ctx.isLoading
 
-
   let filteredWeatherData;
   if (ctx.weatherData.length > 0) {
     const currentDate = new Date()

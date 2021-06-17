@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import './App.css';
 import Layout from './components/UI/Layout'
 import { CssBaseline } from '@material-ui/core'
@@ -7,10 +7,12 @@ import {setPositionData,checkDevicePosition } from './handlers/localstorageHandl
 
 function App() {
 
-  setPositionData()
 
+ useEffect(() => {
+   setPositionData()
   checkDevicePosition()
- 
+ },[])
+
   navigator.geolocation.watchPosition(function(position) {
     console.log("i'm tracking you!");
   },

@@ -29,6 +29,7 @@ export const checkDevicePosition =  () => {
       storedData.pop()
       setLocalStorage(storedData)
       
+      console.log(storedData)
     },deniedPos)     
 }
 
@@ -63,7 +64,7 @@ export const setPositionData = () => {
 export const getLocalStorage = () => {
   let data = localStorage.getItem("positions")
   let storedData: PositionData[]  =  data ? JSON.parse(data) : []
-      return storedData
+  return storedData
 }
 
 export const setLocalStorage = (updatedData:PositionData[]) => {
