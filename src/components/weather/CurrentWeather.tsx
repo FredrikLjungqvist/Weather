@@ -6,7 +6,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import WeatherContext from '../../context/weather-context'
-import {Weather} from '../../context/weather-context'
+
 const useStyles = makeStyles({
   root: {
     display: "flex",

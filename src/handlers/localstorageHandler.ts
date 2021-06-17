@@ -4,12 +4,6 @@ export interface PositionData{
   lat:number;
 }
 
-let currentPosition:any;
-
-
-
-
-
 
 export const checkDevicePosition =  () => {
 
@@ -24,7 +18,6 @@ export const checkDevicePosition =  () => {
       const positionData = await response.json()
       console.log(positionData.items)
       
-
       const currentCity = positionData.items.map((pos:any) => {
         return{
           city:pos.address.county,
@@ -33,18 +26,13 @@ export const checkDevicePosition =  () => {
         }
       })
       
-      let data = localStorage.getItem("positions")
-      let storedData: PositionData[]  =  data ? JSON.parse(data) : []
-    
+      let storedData = getLocalStorage()
       storedData.splice(0,0,currentCity[0])
       storedData.pop()
-
-      localStorage.setItem("positions", JSON.stringify(storedData) )
- 
+      setLocalStorage(storedData)
+      
     },deniedPos)     
 }
-
-
 
 export const setPositionData = () => {
 
@@ -72,4 +60,14 @@ export const setPositionData = () => {
   ]
 
   localStorage.setItem("positions", JSON.stringify(positionData))
+}
+
+export const getLocalStorage = () => {
+  let data = localStorage.getItem("positions")
+  let storedData: PositionData[]  =  data ? JSON.parse(data) : []
+      return storedData
+}
+
+export const setLocalStorage = (updatedData:PositionData[]) => {
+  localStorage.setItem("positions", JSON.stringify(updatedData) )
 }
