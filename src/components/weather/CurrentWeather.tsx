@@ -6,7 +6,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import WeatherContext from '../../context/weather-context'
-
+import { getLocalStorage } from '../../handlers/localstorageHandler';
 const useStyles = makeStyles({
   root: {
     display: "flex",
@@ -18,33 +18,33 @@ const useStyles = makeStyles({
 
 export default function CurrentWeather() {
 
+  const currentPositionInfo = getLocalStorage()
+  console.log(currentPositionInfo)
+    console.log(currentPositionInfo[0].city)
+  
   const ctx = useContext(WeatherContext)
 
-  console.log(ctx.weatherData[0])
- 
+  
   const classes = useStyles();
   return (
     <>
-
       <Card className={classes.root}>
         <CardActionArea>
           <CardContent className={classes.root}>
             <Typography gutterBottom variant="h1" component="h2">
-              Göteborg
+              {currentPositionInfo[0].city}
+              {currentPositionInfo[0].lat}
             </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-            
             {ctx.weatherData.length > 0 ? (
               <div>
                 <img width="100" src={require(`../../assets/icons/${ctx.weatherData[0][0].weatherSymbol}.png`).default} alt="" />
                 <p>{ctx.weatherData[0][0].temp}</p>
               </div>)
             : "loading"}
-
               Lizards are all continents except Antarctica
             widespread group of squamate reptiles, with over 6,000 species, ranging
               across 
-              </Typography>
+              
           </CardContent>
         </CardActionArea>
         <CardActions>
