@@ -38,7 +38,7 @@ export const WeatherContextProvider: React.FC<Props> = (props: Props) => {
 
   const getPositionData = async(cityName:string) => {
     try{
-      const response = await fetch (`https://geocode.search.hereapi.com/v1/geocode?q=${cityName}&apiKey=sKubhZvMfER-j5D59nl1P9F04lNgeAsuKrKgOoVEstM`)
+      const response = await fetch (`https://geocode.search.hereapi.com/v1/geocode?q=${cityName}&apiKey=V2olu2NpV3UrXM82R1rrKp-m8ylURma16wLVMns77Uk`)
       const positionData = await response.json()
       console.log(positionData)
     } catch(error) {
@@ -64,6 +64,7 @@ export const WeatherContextProvider: React.FC<Props> = (props: Props) => {
       const weatherList = await Promise.all(
         positions.map(async (location) => {
           const response = await fetch(`https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${location.long}/lat/${location.lat}/data.json`)
+          
           return await response.json()
         })
       )

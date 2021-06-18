@@ -37,7 +37,7 @@ export default function CurrentWeather() {
             {ctx.weatherData.length > 0 ? (
               <div>
                 <img width="100" src={require(`../../assets/icons/${ctx.weatherData[0][0].weatherSymbol}.png`).default} alt="" />
-                <p>{ctx.weatherData[0][0].temp}</p>
+                {ctx.weatherData[0][0].temp}
               </div>)
             : "loading"}
 
