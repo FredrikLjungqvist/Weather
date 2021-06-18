@@ -1,11 +1,12 @@
 import React, { Component, CSSProperties } from 'react'
 import Header from './Header'
 import { Container } from '@material-ui/core'
-import { Route } from 'react-router-dom';
+import { Route, } from 'react-router-dom';
 import StartView from '../../Pages/StartView'
 import ForecastView from '../../Pages/ForecastView'
 import ForecastDetailView from '../../Pages/ForecastDetailView'
 import Footer from '../Footer'
+
 
 
 
@@ -19,6 +20,7 @@ export default class Layout extends Component {
 
 
 
+
   render() {
     return (
       <>
@@ -28,11 +30,11 @@ export default class Layout extends Component {
             <StartView />
           </Route>
 
-          <Route path="/forecast">
+          <Route path="/:cityName" exact>
             <ForecastView />
           </Route>
 
-          <Route path="/forecastdetail/">
+          <Route path="/:cityName/:currentDate">
             <ForecastDetailView />
           </Route>
         </Container >

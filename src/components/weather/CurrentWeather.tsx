@@ -1,4 +1,4 @@
-import React,{useContext} from 'react';
+import React,{useContext, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -6,7 +6,8 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import WeatherContext from '../../context/weather-context'
-import { getLocalStorage } from '../../handlers/localstorageHandler';
+import { getLocalStorage, checkDevicePosition } from '../../handlers/localstorageHandler';
+import {Link} from 'react-router-dom'
 const useStyles = makeStyles({
   root: {
     display: "flex",
@@ -17,23 +18,25 @@ const useStyles = makeStyles({
 });
 
 export default function CurrentWeather() {
-
-  const currentPositionInfo = getLocalStorage()
-  console.log(currentPositionInfo)
-    console.log(currentPositionInfo[0].city)
   
+  
+  let currentPositionInfo = getLocalStorage()
   const ctx = useContext(WeatherContext)
-
   
   const classes = useStyles();
   return (
     <>
+    <Link  to={`/${currentPositionInfo[0].city}`}>
       <Card className={classes.root}>
         <CardActionArea>
           <CardContent className={classes.root}>
             <Typography gutterBottom variant="h1" component="h2">
-              {currentPositionInfo[0].city}
-              {currentPositionInfo[0].lat}
+                {localStorage.getItem("positions") === null ? 'Loading': 
+                <div>
+                  {currentPositionInfo[0].city}
+                  {currentPositionInfo[0].lat}
+                </div>
+                }
             </Typography>
             {ctx.weatherData.length > 0 ? (
               <div>
@@ -51,6 +54,7 @@ export default function CurrentWeather() {
 
         </CardActions>
       </Card>
+      </Link>
     </>
   );
 }

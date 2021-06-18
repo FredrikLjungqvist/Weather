@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import {PositionData} from '../handlers/localstorageHandler'
+import { getLocalStorage} from '../handlers/localstorageHandler'
+
 
 interface WeatherContextObj {
   getWeatherData: () => void;
@@ -38,24 +39,14 @@ export const WeatherContextProvider: React.FC<Props> = (props: Props) => {
 
   const getPositionData = async(cityName:string) => {
     try{
-      const response = await fetch (`https://geocode.search.hereapi.com/v1/geocode?q=${cityName}&apiKey=sKubhZvMfER-j5D59nl1P9F04lNgeAsuKrKgOoVEstM`)
+      const response = await fetch (`https://geocode.search.hereapi.com/v1/geocode?q=${cityName}&apiKey=V2olu2NpV3UrXM82R1rrKp-m8ylURma16wLVMns77Uk`)
       const positionData = await response.json()
-      console.log(positionData)
+      console.log(positionData, "positionData")
     } catch(error) {
       console.log(error)
     }
   }
 
-  const getLocalStorage = () => {
-    let data:string | null = localStorage.getItem("positions")
-    
-    if(data){
-       const storedPosition:PositionData[] = JSON.parse(data)
-       return storedPosition
-    }
-    return []
-  }
-  
 
   const getWeatherData = async () => {
     setIsLoading(true)
@@ -97,7 +88,6 @@ export const WeatherContextProvider: React.FC<Props> = (props: Props) => {
 
   useEffect(() => {
     getWeatherData()
-    getPositionData("Göteborg")
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
