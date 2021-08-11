@@ -155,11 +155,44 @@ const Forecast = ()=> {
       });
       return map;
   }
-  groupedDates = groupBy(ctx.weatherData[0], (date: { time: any; }) => date.time.toISOString().substr(0,10))
-  console.log(groupedDates["entries"])
 
-}
   
+  groupedDates = groupBy(ctx.weatherData[0], (date: { time: any; }) => date.time.toISOString().substr(0,10))
+
+  let output = groupedDates.keys()
+  console.log(output)
+  let dataArray = Array.from(groupedDates, ([name, value]) => ({ name, value }));
+
+  console.log(dataArray)
+  let flat = dataArray.flat()
+  console.log(flat)
+
+  const dataToSave = dataArray.map((data)=>
+  {
+
+    let tempArray = data.value.map((data:any)=>{
+
+      return data.temp
+
+
+
+    })
+
+    console.log(tempArray)
+    let average = tempArray.reduce(function (sum:any, value:Number) {
+      return sum + value;
+  }, 0) / tempArray.length;
+
+console.log(average);
+
+    console.log(data)
+    return {name:data.name, temp:average}
+    
+
+  }
+  )
+  console.log(dataToSave, "hej")
+}
 
   // example usage
   
