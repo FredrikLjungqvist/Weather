@@ -55,6 +55,7 @@ export const WeatherContextProvider: React.FC<Props> = (props: Props) => {
       const weatherList = await Promise.all(
         positions.map(async (location) => {
           const response = await fetch(`https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${location.long}/lat/${location.lat}/data.json`)
+          
           return await response.json()
         })
       )
