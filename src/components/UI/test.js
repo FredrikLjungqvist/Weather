@@ -76,3 +76,4 @@ const oddEven = groupBy(numbers, x => (x % 2 === 1 ? odd : even));
     
 console.log(oddEven.get(odd)); // -> [1,3,5,7]
 console.log(oddEven.get(even)); // -> [2,4,6]
+console.log(oddEven.get(even)); // -> [2,4,6]
