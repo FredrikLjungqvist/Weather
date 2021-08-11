@@ -1,18 +1,13 @@
-import { minHeight } from '@material-ui/system';
-import { black, white } from 'material-ui/styles/colors';
-import React from 'react';
+/* import { minHeight } from '@material-ui/system'; */
+/* import { black, white } from 'material-ui/styles/colors'; */
+/* import React from 'react'; */
 import { CSSProperties } from 'react';
 
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
-import { fade, makeStyles } from '@material-ui/core/styles';
-import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
 
-const useStyles = makeStyles((theme) => ({
+/* import { fade, makeStyles } from '@material-ui/core/styles'; */
+
+
+/* const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
@@ -65,33 +60,33 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
-}));
+})); */
 
 
 const Footer = () => {
-  const classes = useStyles();
-  return(
-        <div style = {styles}>
+  /*  const classes = useStyles(); */
+  return (
+    <div style={styles}>
 
-            <p>Systemutveckling, Ramverk. Made by Grupp 3 <a href="https://medieinstitutet.se/">@MedieInstitutet </a>WIE20G</p>
+      <p>Systemutveckling, Ramverk. Made by Grupp 3 <a href="https://medieinstitutet.se/">@MedieInstitutet </a>WIE20G</p>
 
-      </div>
-    )  
+    </div>
+  )
 }
 
 
 const styles: CSSProperties = {
-    position: 'fixed',
-    bottom: 0,   
-    background: 'Dodgerblue',
-    color: 'whitesmoke',
-    width: '100%',
-    textAlign: 'center',
-    letterSpacing: '2px',
+  position: 'fixed',
+  bottom: 0,
+  background: 'Dodgerblue',
+  color: 'whitesmoke',
+  width: '100%',
+  textAlign: 'center',
+  letterSpacing: '2px',
 
 
 }
 
 
 
-export default Footer 
+export default Footer
