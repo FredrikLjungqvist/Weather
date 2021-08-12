@@ -8,6 +8,7 @@ import {  Link, useParams} from "react-router-dom";
 import WeatherContext from '../../context/weather-context'
 import {Weather} from '../../context/weather-context'
 
+
 interface Map<K, V> {
   clear(): void;
   delete(key: K): boolean;
@@ -23,11 +24,7 @@ interface Map<K, V> {
   [Symbol.toStringTag]: string;
 }
 
-interface MapConstructor {
-  new <K, V>(): Map<K, V>;
-  new <K, V>(iterable: Iterable<[K, V]>): Map<K, V>;
-  prototype: Map<any, any>;
-}
+
 
 
 const useStyles = makeStyles({
@@ -62,52 +59,15 @@ const useStyles = makeStyles({
   });
 
 
-  interface mock {
+   interface DataToRender {
     id:number
     day:string,
     tempmax: number,
     tempmin: number,
     symbol: number,
     date: string,
-  }
-  const mock:mock[] = [{
-      id: 1,
-      day:'monday',
-      tempmax: 20,
-      tempmin: 10,
-      symbol: 2,
-      date: "2021-03-05",
-    },{
-      id: 3,
-      day:'monday',
-      tempmax: 20,
-      tempmin: 10,
-      symbol: 2,
-      date: "2021-03-05",
-    },{
-      id: 4,
-      day:'monday',
-      tempmax: 20,
-      tempmin: 10,
-      symbol: 2,
-      date: "2021-03-05",
-    },{
-      id: 5,
-      day:'monday',
-      tempmax: 20,
-      tempmin: 10,
-      symbol: 2,
-      date: "2021-03-05",
-    },
-    {
-      id:2,
-      day:'tuesday',
-      tempmax: 20,
-      tempmin: 12,
-      symbol: 5,
-      date: "2021-03-06",
-    }]
-
+  } 
+  
 
 const Forecast = ()=> {
 
@@ -121,26 +81,11 @@ const Forecast = ()=> {
   const classes = useStyles();
   const loading = ctx.isLoading
 
-  let filteredWeatherData;
-  if (ctx.weatherData.length > 0) {
-    const currentDate = new Date()
-    filteredWeatherData = ctx.weatherData[0].filter((weather: any) => weather.time.getDate() === currentDate.getDate())
-  }
-
-  let minMaxTemp= ()=>{
-    let data=ctx.weatherData[0]
-    const currentDate = new Date()
-    const newDate = new Date()
-    for (let index = 0; index < 10; index++) {
-      let day = data.filter((day:any)=> day.time.getDate() === currentDate.getDate())
-      Math.min(...day.temp)    
-      Math.max(...day.temp)    
-      newDate.setDate(newDate.getDate()+1)
-    }
-  }
+  
 
 
   let groupedDates;
+  let dataToRender:any;
   if(ctx.weatherData.length > 0){
     const groupBy = (list:any, keyGetter:any) => {
       const map = new Map();
@@ -157,7 +102,7 @@ const Forecast = ()=> {
   }
 
   
-  groupedDates = groupBy(ctx.weatherData[0], (date: { time: any; }) => date.time.toISOString().substr(0,10))
+  groupedDates = groupBy(ctx.weatherData[0], (date: { time: Date; }) => date.time.toISOString().substr(0,10))
 
   let output = groupedDates.keys()
   console.log(output)
@@ -167,39 +112,49 @@ const Forecast = ()=> {
   let flat = dataArray.flat()
   console.log(flat)
 
-  const dataToSave = dataArray.map((data)=>
+  dataToRender = dataArray.map((data)=>
   {
 
-    let tempArray = data.value.map((data:any)=>{
+    let tempArray = data.value.map((data:Weather)=>{
 
       return data.temp
+  })
 
-
-
+    const tempSymbol = data.value.map((data:Weather)=>{
+      return data.weatherSymbol 
     })
 
-    console.log(tempArray)
+    const symbol = Math.min(...tempSymbol)
+    
+    
     let average = tempArray.reduce(function (sum:any, value:Number) {
-      return sum + value;
-  }, 0) / tempArray.length;
+        return sum + value;
+    }, 0) / tempArray.length;
 
-console.log(average);
-
-    console.log(data)
-    return {name:data.name, temp:average}
+  
+    let maxTemp = Math.max(...tempArray)
+    let minTemp = Math.min(...tempArray)
+    
+    const day = new Date(data.name)
+    
+    const dayRender = day.toLocaleDateString('se-SE', { weekday: 'long' });
+    
+    return {date:data.name, tempmax:maxTemp, tempmin:minTemp, symbol:symbol, id:data.value[0].id, day:dayRender }
     
 
   }
   )
-  console.log(dataToSave, "hej")
+  console.log(dataToRender, "hej")
 }
 
-  // example usage
+  
   
    
   return (
+    <>
+      {!loading && ctx.weatherData.length > 0 ?
     <Container className={classes.cont}>
-      {mock.map((data) => (
+      {dataToRender.map((data:DataToRender) => (
       <Link key={data.id} className={classes.link} to="/forecastdetail">
         <Card  className={classes.root}>
           <CardContent>
@@ -223,6 +178,7 @@ console.log(average);
       </Link>
         ))}
     </Container>
+        :<p></p>}</>
   ) 
 }
 export default Forecast
