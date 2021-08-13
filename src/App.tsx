@@ -1,25 +1,31 @@
-import React,{useEffect} from 'react';
 import './App.css';
+import { useEffect } from 'react'
 import Layout from './components/UI/Layout'
-import { CssBaseline } from '@material-ui/core'
-import { BrowserRouter } from 'react-router-dom';
-import {checkDevicePosition } from './handlers/localstorageHandler'
+import { Route, Link } from 'react-router-dom';
+import StartView from './Pages/StartView'
+import ForecastView from './Pages/ForecastView'
+import ForecastDetailView from './Pages/ForecastDetailView'
+import { checkDevicePosition, setPositionData, getLocalStorage, setLocalStorage } from './handlers/localstorageHandler'
+
 
 function App() {
-
   
-  useEffect(() => {
-        checkDevicePosition()
-  })
+  checkDevicePosition()
+
 
   return (
     <>
-      <CssBaseline>
-        <BrowserRouter>
-          <Layout />
-    <button onClick={checkDevicePosition}>Knapp</button>
-        </BrowserRouter>
-      </CssBaseline>
+      <Layout>
+        <Route path="/" exact>
+          <StartView />
+        </Route>
+        <Route path="/:cityName" exact>
+            <ForecastView />
+        </Route>
+        <Route path="/:cityName/:currentDate">
+          <ForecastDetailView />
+        </Route>
+      </Layout>
     </>
   );
 }

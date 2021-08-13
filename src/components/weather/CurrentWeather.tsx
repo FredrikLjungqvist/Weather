@@ -1,4 +1,4 @@
-import React,{useContext, useEffect} from 'react';
+import { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -6,8 +6,8 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import WeatherContext from '../../context/weather-context'
-import { getLocalStorage, checkDevicePosition } from '../../handlers/localstorageHandler';
-import {Link} from 'react-router-dom'
+import { getLocalStorage } from '../../handlers/localstorageHandler';
+
 const useStyles = makeStyles({
   root: {
     display: "flex",
@@ -26,7 +26,6 @@ export default function CurrentWeather() {
   const classes = useStyles();
   return (
     <>
-    <Link  to={`/${currentPositionInfo[0].city}`}>
       <Card className={classes.root}>
         <CardActionArea>
           <CardContent className={classes.root}>
@@ -54,7 +53,6 @@ export default function CurrentWeather() {
 
         </CardActions>
       </Card>
-      </Link>
     </>
   );
 }
