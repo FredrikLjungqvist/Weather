@@ -4,8 +4,6 @@ export interface PositionData{
   lat:number;
 }
 
-
-
 export const checkDevicePosition =  () => {
 
   const deniedPos = () => {
@@ -82,4 +80,5 @@ export const getLocalStorage = () => {
 export const setLocalStorage = (updatedData:PositionData[]) => {
   localStorage.setItem("positions", JSON.stringify(updatedData) )
 }
+
 

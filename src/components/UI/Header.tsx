@@ -12,12 +12,6 @@ export default class Header extends Component {
           <NavLink to="/">
             Home
           </NavLink>
-          <NavLink to="/forecast">
-            forecastview
-          </NavLink>
-          <NavLink to="/forecastdetail">
-            forecasDetailtview
-          </NavLink>
           <FreeSolo />
         </Toolbar>
       </AppBar>

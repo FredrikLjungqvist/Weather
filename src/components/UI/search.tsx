@@ -1,34 +1,39 @@
-/* eslint-disable no-use-before-define */
-import React from 'react';
 import TextField from '@material-ui/core/TextField';
-import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import myArray from '../../citys';
-
-
-
+import { useHistory } from 'react-router-dom'
+import { useContext } from 'react'
+import WeatherContext from '../../context/weather-context';
 export default function FreeSolo() {
-    let city
-    console.log('hej')
+  const ctx = useContext(WeatherContext);
+  let history = useHistory();
+
+  const toForecastHandler = ( event: any, value: any) => {
+    if( value === null) {
+      return console.log("värdet var ogiltligt")
+    }
+    ctx.getCurrentForecastOption(value)
+      history.push(`/${value}`)
+  }
+
     return (
       <div style={{ width: 300 }}>
-          
         <Autocomplete
+          onChange={( event, value) =>  value != null ? toForecastHandler(event, value) : '' }
           freeSolo
           id="free-solo-2-demo"
-          disableClearable
-          options={myArray.map((option) => option)}
-          
+          autoSelect={true}
+          options={myArray.map((option) => option )}
           renderInput={(params) => (
             <TextField
-              {...params}
-              label="Search input"
-              margin="normal"
-              variant="outlined"
-              value=""
-              InputProps={{ ...params.InputProps, type: 'search' }}
+            {...params}
+            label="Search input"
+            margin="normal"
+            variant="outlined"
+            InputProps={{ ...params.InputProps, type: 'search' }}
             />
-            
           )}
+          
         />
       </div>
     );

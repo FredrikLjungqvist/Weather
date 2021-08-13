@@ -1,7 +1,7 @@
-import React, { useContext} from 'react'
+import React, { useContext } from 'react'
 import { makeStyles, Container, TableContainer, Table, TableHead, TableCell, TableRow, TableBody, Hidden } from '@material-ui/core'
 import WeatherContext from '../../context/weather-context'
-
+import { useParams } from 'react-router-dom'
 
 const useStyles = makeStyles({
   table: {
@@ -10,21 +10,29 @@ const useStyles = makeStyles({
 })
 
 const CityForecastDetails = () => {
+  const params:any = useParams()
+
+  console.log(params.currentDate)
   const classes = useStyles();
   const ctx = useContext(WeatherContext)
   const loading = ctx.isLoading
 
+  console.log('I Detail 🤬')
+
   let filteredWeatherData;
-  if (ctx.weatherData.length > 0) {
-    const currentDate = new Date()
-    filteredWeatherData = ctx.weatherData[0].filter((weather: any) => weather.time.getDate() === currentDate.getDate())
+  if (ctx.selectedForecast.length > 0) {
+    const currentDate = new Date(params.currentDate)
+    console.log(currentDate)
+    filteredWeatherData = ctx.selectedForecast.filter((weather: any) => weather.time.getDate() === currentDate.getDate())
+    console.log(filteredWeatherData, 'filteeer')
   }
 
+  console.log(ctx.selectedForecast, 'i detail!!')
   return (
     <Container style={{ width: "100vw", display: "flex", alignItems: "center", flexDirection: "column" }} maxWidth='lg' disableGutters>
-      {!loading && ctx.weatherData.length > 0 ?
+      {!loading && ctx.selectedForecast.length > 0 ?
         <>
-          <h1>Göteborg</h1>
+          <h1>Test titel</h1>
           <TableContainer className={classes.table}  >
             <Table padding="none" size="small" aria-label="simple table">
               <TableHead>
@@ -40,7 +48,7 @@ const CityForecastDetails = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {filteredWeatherData.map((row: any) => (
+                {filteredWeatherData?.map((row: any) => (
                   <TableRow key={row.id}>
                     <TableCell align="center" component="th" >
                       {row.time.getHours()}

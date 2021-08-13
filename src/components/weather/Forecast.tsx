@@ -1,4 +1,4 @@
-import React, { useContext} from 'react'
+import { useContext, useEffect} from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -69,24 +69,19 @@ const useStyles = makeStyles({
   } 
   
 
-const Forecast = ()=> {
+const Forecast = (props: any)=> {
 
   const ctx = useContext(WeatherContext)
 
   const params:any = useParams()
-  console.log(params.cityName)
-  ctx.getPositionData(params.cityName)
 
-
+  console.log("i forecast!!!! 😡")
   const classes = useStyles();
   const loading = ctx.isLoading
 
-  
-
-
   let groupedDates;
   let dataToRender:any;
-  if(ctx.weatherData.length > 0){
+  if(ctx.selectedForecast.length > 0){
     const groupBy = (list:any, keyGetter:any) => {
       const map = new Map();
       list.forEach((item:any) => {
@@ -102,7 +97,7 @@ const Forecast = ()=> {
   }
 
   
-  groupedDates = groupBy(ctx.weatherData[0], (date: { time: Date; }) => date.time.toISOString().substr(0,10))
+  groupedDates = groupBy(ctx.selectedForecast, (date: { time: Date; }) => date.time.toISOString().substr(0,10))
 
   let output = groupedDates.keys()
   console.log(output)
@@ -127,9 +122,9 @@ const Forecast = ()=> {
     const symbol = Math.min(...tempSymbol)
     
     
-    let average = tempArray.reduce(function (sum:any, value:Number) {
+/*     let average = tempArray.reduce(function (sum:any, value:Number) {
         return sum + value;
-    }, 0) / tempArray.length;
+    }, 0) / tempArray.length; */
 
   
     let maxTemp = Math.max(...tempArray)
@@ -152,10 +147,10 @@ const Forecast = ()=> {
    
   return (
     <>
-      {!loading && ctx.weatherData.length > 0 ?
+      {!loading && ctx.selectedForecast.length > 0 ?
     <Container className={classes.cont}>
       {dataToRender.map((data:DataToRender) => (
-      <Link key={data.id} className={classes.link} to="/forecastdetail">
+      <Link key={data.id} className={classes.link} to={`/${params.cityName}/${data.date}`}>
         <Card  className={classes.root}>
           <CardContent>
             <h1>{params.cityName}</h1>
@@ -178,7 +173,7 @@ const Forecast = ()=> {
       </Link>
         ))}
     </Container>
-        :<p></p>}</>
+        :<p>LOADING......</p>}</>
   ) 
 }
 export default Forecast

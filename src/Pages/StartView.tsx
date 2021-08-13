@@ -1,10 +1,6 @@
 import React, { CSSProperties } from 'react'
 import CurrentWeather from '../components/weather/CurrentWeather'
 
-
-
-
-
 const StartView = () => {
 
   const styles: CSSProperties = {
@@ -17,8 +13,6 @@ const StartView = () => {
     <div style={styles} >
       <h1>StartView</h1>
       <CurrentWeather />
-
-
     </div>
   )
 }
