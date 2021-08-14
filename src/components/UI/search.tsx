@@ -12,8 +12,7 @@ export default function FreeSolo() {
     if( value === null) {
       return console.log("värdet var ogiltligt")
     }
-    ctx.getCurrentForecastOption(value)
-      history.push(`/${value}`)
+      history.push(`/stad/${value}`)
   }
 
     return (

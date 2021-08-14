@@ -1,7 +1,9 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { makeStyles, Container, TableContainer, Table, TableHead, TableCell, TableRow, TableBody, Hidden } from '@material-ui/core'
 import WeatherContext from '../../context/weather-context'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
+
+
 
 const useStyles = makeStyles({
   table: {
@@ -10,29 +12,35 @@ const useStyles = makeStyles({
 })
 
 const CityForecastDetails = () => {
+  const history = useHistory();
   const params:any = useParams()
+  const [appDate, setAppDate] = useState(params.currentDate)
+  let currentDate = new Date(appDate)
 
-  console.log(params.currentDate)
+
   const classes = useStyles();
   const ctx = useContext(WeatherContext)
   const loading = ctx.isLoading
 
-  console.log('I Detail 🤬')
-
   let filteredWeatherData;
   if (ctx.selectedForecast.length > 0) {
-    const currentDate = new Date(params.currentDate)
-    console.log(currentDate)
     filteredWeatherData = ctx.selectedForecast.filter((weather: any) => weather.time.getDate() === currentDate.getDate())
-    console.log(filteredWeatherData, 'filteeer')
-  }
 
-  console.log(ctx.selectedForecast, 'i detail!!')
+  } 
+
+
+  const datePaginationHandler = () => {
+    setAppDate(currentDate.setDate(currentDate.getDate() + 1))
+    history.push(`/stad/${params.cityName}/datum/${currentDate.toISOString().substr(0,10)}`)
+  };
+  
   return (
     <Container style={{ width: "100vw", display: "flex", alignItems: "center", flexDirection: "column" }} maxWidth='lg' disableGutters>
       {!loading && ctx.selectedForecast.length > 0 ?
         <>
-          <h1>Test titel</h1>
+        <h1>{ctx.selectedForecast[0].city}</h1>
+        <h3>{currentDate.toLocaleDateString('se-SE', { weekday: 'long', day: 'numeric', month: 'long'  })}</h3>
+          <button onClick={datePaginationHandler} >Framåt</button>
           <TableContainer className={classes.table}  >
             <Table padding="none" size="small" aria-label="simple table">
               <TableHead>
@@ -48,6 +56,7 @@ const CityForecastDetails = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
+                
                 {filteredWeatherData?.map((row: any) => (
                   <TableRow key={row.id}>
                     <TableCell align="center" component="th" >
@@ -71,6 +80,7 @@ const CityForecastDetails = () => {
           </TableContainer >
         </> : <h1>LOADING....</h1>}
     </Container>
+    
 
   )
 }

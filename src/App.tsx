@@ -1,30 +1,34 @@
 import './App.css';
-import { useEffect } from 'react'
 import Layout from './components/UI/Layout'
-import { Route, Link } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import StartView from './Pages/StartView'
+import NotFound from './Pages/NotFound'
 import ForecastView from './Pages/ForecastView'
 import ForecastDetailView from './Pages/ForecastDetailView'
-import { checkDevicePosition, setPositionData, getLocalStorage, setLocalStorage } from './handlers/localstorageHandler'
+import { checkDevicePosition } from './handlers/localstorageHandler'
 
 
 function App() {
   
   checkDevicePosition()
 
-
   return (
     <>
       <Layout>
-        <Route path="/" exact>
-          <StartView />
-        </Route>
-        <Route path="/:cityName" exact>
-            <ForecastView />
-        </Route>
-        <Route path="/:cityName/:currentDate">
-          <ForecastDetailView />
-        </Route>
+          <Switch>
+          <Route path="/" exact>
+            <StartView />
+          </Route>
+          <Route path="/stad/:cityName" exact>
+              <ForecastView />
+          </Route>
+          <Route path="/stad/:cityName/datum/:currentDate">
+            <ForecastDetailView />
+          </Route>
+          <Route path="*">
+            <NotFound />
+          </Route>
+        </Switch>
       </Layout>
     </>
   );

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import { getLocalStorage, setLocalStorage } from '../handlers/localstorageHandler'
+import { checkDevicePosition, getLocalStorage, setLocalStorage } from '../handlers/localstorageHandler'
 
 export interface Weather {
   id: string;
+  city: string;
   time: object;
   precipitation: number;
   temp: number;
@@ -11,6 +12,7 @@ export interface Weather {
   humidity: number;
   weatherSymbol: number;
 }
+
 interface WeatherContextObj {
   getWeatherData: () => void;
   getCurrentForecastOption: (forecastOption: string) => void;
@@ -39,14 +41,12 @@ export const WeatherContextProvider: React.FC<Props> = (props: Props) => {
 
   const getCurrentForecastOption = async (forecastOption: string) => {
       setIsLoading(true)
-      console.log(isLoading, '🤖');
     try {
         const response = await fetch(`https://geocode.search.hereapi.com/v1/geocode?q=${forecastOption}&apiKey=V2olu2NpV3UrXM82R1rrKp-m8ylURma16wLVMns77Uk`)
         const data = await response.json();
         const currentStorage = getLocalStorage();
         console.log( '👻' ,data)
-
-        currentStorage.splice(0,0, { city: forecastOption, long: data.items[0].position.lng , lat: data.items[0].position.lat })
+        currentStorage.splice(0,0, { city: data.items[0].address.city, long: data.items[0].position.lng , lat: data.items[0].position.lat })
         currentStorage.pop();
         setLocalStorage(currentStorage)
         selectedOptionForecast(data)
@@ -60,8 +60,8 @@ export const WeatherContextProvider: React.FC<Props> = (props: Props) => {
   const selectedOptionForecast = async (hereData:any) => {
       const weatherFetch = await fetch(`https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${hereData.items[0].position.lng}/lat/${hereData.items[0].position.lat}/data.json`)
       const weatherRes = await weatherFetch.json()
-      console.log(weatherRes, 'option väderdata 🤠') 
-      console.log(weatherRes, '🤡')
+
+      console.log(hereData.items[0].address.city, '💄')
       const cityOptionWeatherData = weatherRes.timeSeries.map((option:any) => {
         const temp = option.parameters.find((i: { name: string }) => i.name === "t")
         const symbol = option.parameters.find((i: { name: string }) => i.name === "Wsymb2")
@@ -71,6 +71,7 @@ export const WeatherContextProvider: React.FC<Props> = (props: Props) => {
         const date = new Date(option.validTime)
         return {
           id: uuidv4(),
+          city: hereData.items[0].address.city,
           time: date,
           temp: temp.values[0],
           precipitation: precipitation.values[0],
