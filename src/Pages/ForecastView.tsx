@@ -6,7 +6,6 @@ const ForecastView = () => {
 
   return (
     <div>
-      <h1>ForecastView</h1>
       <Forecast />
     </div>
   )

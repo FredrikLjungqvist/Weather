@@ -1,4 +1,4 @@
-import { useContext, useEffect} from 'react'
+import { useContext, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -7,25 +7,6 @@ import Container from '@material-ui/core/Container';
 import {  Link, useParams} from "react-router-dom";
 import WeatherContext from '../../context/weather-context'
 import {Weather} from '../../context/weather-context'
-
-
-interface Map<K, V> {
-  clear(): void;
-  delete(key: K): boolean;
-  entries(): IterableIterator<[K, V]>;
-  forEach(callbackfn: (value: V, index: K, map: Map<K, V>) => void, thisArg?: any): void;
-  get(key: K): V;
-  has(key: K): boolean;
-  keys(): IterableIterator<K>;
-  set(key: K, value?: V): Map<K, V>;
-  size: number;
-  values(): IterableIterator<V>;
-  [Symbol.iterator]():IterableIterator<[K,V]>;
-  [Symbol.toStringTag]: string;
-}
-
-
-
 
 const useStyles = makeStyles({
     root: {
@@ -69,16 +50,17 @@ const useStyles = makeStyles({
   } 
   
 
-const Forecast = (props: any)=> {
-
+const Forecast = ()=> {
   const ctx = useContext(WeatherContext)
-
   const params:any = useParams()
+  const { cityName } = params;
+console.log(ctx.selectedForecast, 'var är våran city?')
+  useEffect(() => {
+    ctx.getCurrentForecastOption(cityName)
+  }, [cityName])
 
-  console.log("i forecast!!!! 😡")
   const classes = useStyles();
   const loading = ctx.isLoading
-
   let groupedDates;
   let dataToRender:any;
   if(ctx.selectedForecast.length > 0){
@@ -139,21 +121,19 @@ const Forecast = (props: any)=> {
 
   }
   )
-  console.log(dataToRender, "hej")
+ 
 }
 
-  
-  
-   
   return (
     <>
       {!loading && ctx.selectedForecast.length > 0 ?
+    <>
+      <h1>{ctx.selectedForecast[0].city}</h1>
     <Container className={classes.cont}>
       {dataToRender.map((data:DataToRender) => (
-      <Link key={data.id} className={classes.link} to={`/${params.cityName}/${data.date}`}>
+      <Link key={data.id} className={classes.link} to={`/stad/${params.cityName}/datum/${data.date}`}>
         <Card  className={classes.root}>
           <CardContent>
-            <h1>{params.cityName}</h1>
             <Typography variant="h5" component="h2">
               {data.day}
             </Typography>
@@ -173,6 +153,7 @@ const Forecast = (props: any)=> {
       </Link>
         ))}
     </Container>
+    </>
         :<p>LOADING......</p>}</>
   ) 
 }
