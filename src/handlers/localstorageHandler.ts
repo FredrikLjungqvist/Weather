@@ -33,6 +33,7 @@ export const checkDevicePosition =  () => {
       })
       
         setPositionData()
+
         let storedData = getLocalStorage()
         storedData.splice(0,0,currentCity[0])
         storedData.pop()
@@ -68,7 +69,9 @@ export const setPositionData = () => {
     },
   ]
 
-  localStorage.setItem("positions", JSON.stringify(positionData))
+  if (localStorage.getItem("positions") === null) {
+    localStorage.setItem("positions", JSON.stringify(positionData))
+  }
 }
 
 export const getLocalStorage = () => {

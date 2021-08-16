@@ -1,8 +1,8 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { makeStyles, Container, TableContainer, Table, TableHead, TableCell, TableRow, TableBody, Hidden } from '@material-ui/core'
 import WeatherContext from '../../context/weather-context'
 import { useParams, useHistory } from 'react-router-dom'
-
+import { Weather } from '../../context/weather-context'
 
 
 const useStyles = makeStyles({
@@ -17,17 +17,27 @@ const CityForecastDetails = () => {
   const [appDate, setAppDate] = useState(params.currentDate)
   let currentDate = new Date(appDate)
 
-
+  
   const classes = useStyles();
   const ctx = useContext(WeatherContext)
   const loading = ctx.isLoading
-
-  let filteredWeatherData;
+  const { cityName } = params
+  let filteredWeatherData: Weather[] = [];
   if (ctx.selectedForecast.length > 0) {
     filteredWeatherData = ctx.selectedForecast.filter((weather: any) => weather.time.getDate() === currentDate.getDate())
-
   } 
 
+  useEffect(() => {
+    if (ctx.selectedForecast.length > 0) {
+      if (ctx.selectedForecast[0].city === cityName) {
+        return;
+      }else {
+          ctx.getCurrentForecastOption(cityName)
+        }
+    } else {
+      ctx.getCurrentForecastOption(cityName)
+    }
+  }, [params.cityName])
 
   const datePaginationHandler = () => {
     setAppDate(currentDate.setDate(currentDate.getDate() + 1))
@@ -40,7 +50,7 @@ const CityForecastDetails = () => {
         <>
         <h1>{ctx.selectedForecast[0].city}</h1>
         <h3>{currentDate.toLocaleDateString('se-SE', { weekday: 'long', day: 'numeric', month: 'long'  })}</h3>
-          <button onClick={datePaginationHandler} >Framåt</button>
+          {filteredWeatherData.length > 0 ? <button onClick={datePaginationHandler} >Framåt</button> : undefined }
           <TableContainer className={classes.table}  >
             <Table padding="none" size="small" aria-label="simple table">
               <TableHead>
@@ -57,7 +67,7 @@ const CityForecastDetails = () => {
               </TableHead>
               <TableBody>
                 
-                {filteredWeatherData?.map((row: any) => (
+                {filteredWeatherData.map((row: any) => (
                   <TableRow key={row.id}>
                     <TableCell align="center" component="th" >
                       {row.time.getHours()}

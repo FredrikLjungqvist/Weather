@@ -4,15 +4,18 @@ import myArray from '../../citys';
 import { useHistory } from 'react-router-dom'
 import { useContext } from 'react'
 import WeatherContext from '../../context/weather-context';
+
 export default function FreeSolo() {
   const ctx = useContext(WeatherContext);
   let history = useHistory();
 
   const toForecastHandler = ( event: any, value: any) => {
+    // om value är === någon stad i listan. 
     if( value === null) {
       return console.log("värdet var ogiltligt")
     }
       history.push(`/stad/${value}`)
+      
   }
 
     return (
@@ -26,6 +29,7 @@ export default function FreeSolo() {
           renderInput={(params) => (
             <TextField
             {...params}
+            id="textField"
             label="Search input"
             margin="normal"
             variant="outlined"
