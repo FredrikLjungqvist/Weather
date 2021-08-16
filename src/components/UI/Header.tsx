@@ -15,8 +15,6 @@ export default class Header extends Component {
           <FreeSolo />
         </Toolbar>
       </AppBar>
-
     )
   }
-
 }

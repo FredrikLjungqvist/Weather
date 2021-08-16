@@ -26,14 +26,14 @@ export default function CurrentWeather() {
   const classes = useStyles();
   return (
     <>
+    
       <Card className={classes.root}>
         <CardActionArea>
           <CardContent className={classes.root}>
             <Typography gutterBottom variant="h1" component="h2">
-                {localStorage.getItem("positions") === null ? 'Loading': 
+                { ctx.weatherData.length > 0 && localStorage.getItem("positions") === null ? 'Loading': 
                 <div>
                   {currentPositionInfo[0].city}
-                  {currentPositionInfo[0].lat}
                 </div>
                 }
             </Typography>
@@ -43,9 +43,6 @@ export default function CurrentWeather() {
                 {ctx.weatherData[0][0].temp}
               </div>)
             : "loading"}
-              Lizards are all continents except Antarctica
-            widespread group of squamate reptiles, with over 6,000 species, ranging
-              across 
               
           </CardContent>
         </CardActionArea>
@@ -53,6 +50,7 @@ export default function CurrentWeather() {
 
         </CardActions>
       </Card>
-    </>
+    </> 
   );
+  
 }

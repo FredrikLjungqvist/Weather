@@ -1,7 +1,10 @@
-import React, { CSSProperties } from 'react'
+import React, { CSSProperties, useContext } from 'react'
 import CurrentWeather from '../components/weather/CurrentWeather'
 
+
+
 const StartView = () => {
+
 
   const styles: CSSProperties = {
     display: "flex",
