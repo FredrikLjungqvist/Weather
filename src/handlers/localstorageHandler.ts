@@ -7,16 +7,15 @@ export interface PositionData{
 export const checkDevicePosition =  () => {
 
   const deniedPos = () => {
-    console.log("plats är av")
-    setPositionData()
+    console.log("plats är av 👧🏻")
   }
 
-  window.addEventListener("storage", ()=> {
+/*   window.addEventListener("storage", ()=> {
     const data = window.localStorage.getItem('positions')
     const parse = data ? JSON.parse(data) : []
     
      console.log(parse, "window")
-   })
+   }) */
 
   navigator.geolocation.getCurrentPosition(async(pos) => {
       
@@ -31,16 +30,12 @@ export const checkDevicePosition =  () => {
           lat:pos.position.lat,
         }
       })
-      
-        setPositionData()
-
         let storedData = getLocalStorage()
-        storedData.splice(0,0,currentCity[0])
-        storedData.pop()
+        storedData.splice(0,1,currentCity[0])
         setLocalStorage(storedData)
   
         console.log(storedData,"hääääär")
-      
+
     },deniedPos)     
 }
 

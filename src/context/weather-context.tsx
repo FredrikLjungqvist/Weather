@@ -1,6 +1,6 @@
-import React, { useState, } from 'react'
+import React, { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import {  getLocalStorage, setLocalStorage, checkDevicePosition } from '../handlers/localstorageHandler'
+import {  getLocalStorage, setLocalStorage } from '../handlers/localstorageHandler'
 
 export interface Weather {
   id: string;
@@ -44,12 +44,13 @@ export const WeatherContextProvider: React.FC<Props> = (props: Props) => {
         const response = await fetch(`https://geocode.search.hereapi.com/v1/geocode?q=${forecastOption}&apiKey=V2olu2NpV3UrXM82R1rrKp-m8ylURma16wLVMns77Uk`)
         const data = await response.json();
         const currentStorage = getLocalStorage();
-        currentStorage.splice(0,0, { city: data.items[0].address.city, long: data.items[0].position.lng , lat: data.items[0].position.lat })
+        currentStorage.splice(1,0, { city: data.items[0].address.city, long: data.items[0].position.lng , lat: data.items[0].position.lat })
         currentStorage.pop();
         setLocalStorage(currentStorage)
         selectedOptionForecast(data)
       } catch (err) {
         setIsLoading(false)
+        /* throw new Error('Data från Here.com gick ej att hämta!') */
         console.log(err)
       }
       setIsLoading(false)
@@ -79,6 +80,7 @@ export const WeatherContextProvider: React.FC<Props> = (props: Props) => {
         }
       });
       setSelectedForecast(cityOptionWeatherData)
+      getWeatherData();
   }
 
   const getWeatherData = async () => {
@@ -124,6 +126,7 @@ export const WeatherContextProvider: React.FC<Props> = (props: Props) => {
   }
 
 
+ 
 
   return (
     <WeatherContext.Provider value={{

@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { WeatherContextProvider } from './context/weather-context'
 import { BrowserRouter } from 'react-router-dom';
+import ErrorBoundary from './components/ErrorBoundary'
 
 ReactDOM.render(
   <BrowserRouter>
