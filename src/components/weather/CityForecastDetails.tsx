@@ -37,6 +37,7 @@ const CityForecastDetails = () => {
     } else {
       ctx.getCurrentForecastOption(cityName)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params.cityName])
 
   const datePaginationHandler = () => {

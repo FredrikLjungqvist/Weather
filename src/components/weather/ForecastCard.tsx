@@ -44,15 +44,15 @@ interface Props {
 }
 
 const ForecastCard = (props: Props) => {
-  const params: any = useParams();
+  const params:any = useParams()
   const classes = useStyles();
 
   return (
-    <Link key={props.id} className={classes.link} to={`/stad/${params.cityName}/datum/${props.date}`}>
-    <Card  className={classes.root}>
+    <Link key={props.id} className={classes.link} to={`/stad/${props.city}/datum/${props.date}`}>
+    <Card className={classes.root}>
       <CardContent>
         <Typography variant="h5" component="h2">
-          {props.day}
+          {params.cityName ? props.day : props.city}
         </Typography>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
           {props.date}

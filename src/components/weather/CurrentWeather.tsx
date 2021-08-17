@@ -26,7 +26,6 @@ export default function CurrentWeather() {
   const classes = useStyles();
   return (
     <>
-    
       <Card className={classes.root}>
         <CardActionArea>
           <CardContent className={classes.root}>
@@ -47,7 +46,6 @@ export default function CurrentWeather() {
           </CardContent>
         </CardActionArea>
         <CardActions>
-
         </CardActions>
       </Card>
     </> 

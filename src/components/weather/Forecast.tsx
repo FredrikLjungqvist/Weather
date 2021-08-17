@@ -24,11 +24,12 @@ const useStyles = makeStyles({
 
    interface DataToRender {
     id:string
-    day:string,
-    tempmax: number,
-    tempmin: number,
-    symbol: number,
-    date: string,
+    day:string
+    city:string
+    tempmax: number
+    tempmin: number
+    symbol: number
+    date: string
   } 
   
 
@@ -47,6 +48,7 @@ const Forecast = ()=> {
     } else {
       ctx.getCurrentForecastOption(cityName)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cityName])
 
   const classes = useStyles();
@@ -105,8 +107,8 @@ const Forecast = ()=> {
     const day = new Date(data.name)
     
     const dayRender = day.toLocaleDateString('se-SE', { weekday: 'long' });
-    
-    return {date:data.name, tempmax:maxTemp, tempmin:minTemp, symbol:symbol, id:data.value[0].id, day:dayRender }
+    console.log(data, '👀')
+    return {date:data.name, city: data.value[0].city, tempmax:maxTemp, tempmin:minTemp, symbol:symbol, id:data.value[0].id, day:dayRender }
     
 
   }
@@ -115,13 +117,14 @@ const Forecast = ()=> {
 }
 
   return (
-    <>
-      {!loading && ctx.selectedForecast.length > 0 ?
       <>
+        {ctx.selectedForecast.length > 0 &&
+        <>
         <h1>{ctx.selectedForecast[0].city}</h1>
         <Container className={classes.cont}>
           {dataToRender.map((data:DataToRender) => ( 
-            <ForecastCard 
+            <ForecastCard
+              key={data.id} 
               id={data.id}
               city={ctx.selectedForecast[0].city}
               tempmin={data.tempmin}  
@@ -131,8 +134,8 @@ const Forecast = ()=> {
               symbol={data.symbol}
             />))}
         </Container>
+        </>}
       </>
-      :<p>LOADING......</p>}</>
   ) 
 }
 export default Forecast

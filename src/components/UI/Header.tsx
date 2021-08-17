@@ -10,7 +10,7 @@ export default class Header extends Component {
       <AppBar color="transparent">
         <Toolbar>
           <NavLink to="/">
-            Home
+            <h1>VäderApp</h1>
           </NavLink>
           <FreeSolo />
         </Toolbar>
