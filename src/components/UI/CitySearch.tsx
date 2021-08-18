@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom'
 import { useContext } from 'react'
 import WeatherContext from '../../context/weather-context';
 
-export default function FreeSolo() {
+export default function CitySearch() {
   const ctx = useContext(WeatherContext);
   let history = useHistory();
 

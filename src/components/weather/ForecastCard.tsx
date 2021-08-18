@@ -58,10 +58,10 @@ const ForecastCard = (props: Props) => {
           {props.date}
         </Typography>
         <Typography className={classes.pos} color="textPrimary">
-          {props.tempmax}°
+          {Math.floor(props.tempmax)}°
         </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
-          {props.tempmin}°
+          {Math.floor(props.tempmin)}°
           <br />
         <img src={require(`../../assets/icons/${props.symbol}.png`).default} width="100" alt="" />
         </Typography>

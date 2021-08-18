@@ -7,10 +7,10 @@ const styles: CSSProperties = {
 
 }
 
-const ForecastDetailView = () => {
+const ForecastDetailView = (props:any) => {
   return (
     <div style={styles}>
-      <CityForecastDetails />
+      <CityForecastDetails groupedData={props.groupedData} />
     </div>
   )
 }

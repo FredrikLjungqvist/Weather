@@ -1,12 +1,13 @@
 import React, { useState, useContext } from 'react'
 import CurrentWeather from '../components/weather/CurrentWeather'
+import ErrorBoundary from '../components/ErrorBoundary'
 import FavouriteForecastList from '../components/weather/FavouriteForecastList'
 import { Container, makeStyles, Button, CircularProgress } from '@material-ui/core'
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import { setLocalStorage, getLocalStorage } from '../handlers/localstorageHandler';
 import WeatherContext from '../context/weather-context';
-import ErrorBoundary from '../components/ErrorBoundary';
 import RotateRightIcon from '@material-ui/icons/RotateRight';
+
 const useStyles = makeStyles({
   root: {
     minWidth: 150,
@@ -27,19 +28,25 @@ const useStyles = makeStyles({
     alignItems: 'center',
     flexDirection: 'column',
   },
+  loadBox: {
+    display: "flex",
+    alignItems: "center",
+    minHeight: 300
+  }
 });
 
 const StartView = () => {
   const [fetchingPosition, setFetchingPosition] = useState(false)
   const [positionisFetched, setPositionIsFetched] = useState(false)
   const ctx = useContext(WeatherContext);
-  const classes = useStyles();
+
+
+
   const checkDevicePosition =  () => {
     const deniedPos = () => {
 
       setFetchingPosition(false)
       throw new Error('det blev fel')
-    
     }
     navigator.geolocation.getCurrentPosition(async(pos) => {   
       
@@ -63,22 +70,24 @@ const StartView = () => {
 
   }
 
+  const classes = useStyles();
+
   const FetchPositionHandler = () => {
     setFetchingPosition(true)
     checkDevicePosition()
   }
 
-  const locationButton = !positionisFetched ? (<Button onClick={FetchPositionHandler}>Hämta min plats <LocationOnIcon/></Button>) :
-  (<Button onClick={FetchPositionHandler}>Uppdatera min plats <RotateRightIcon/></Button>)
+  const locationButton = !positionisFetched ? (<Button variant="contained" color="primary" onClick={FetchPositionHandler}>Hämta min plats <LocationOnIcon/></Button>) :
+  (<Button variant="contained" color="secondary" onClick={FetchPositionHandler}>Uppdatera min plats <RotateRightIcon/></Button>)
 
   return (
     <Container>
-
+      <ErrorBoundary>
       <Container className={classes.topContainer}>
-      <h1>StartView</h1>
-        {fetchingPosition ? <CircularProgress/> : <CurrentWeather />}
+        {fetchingPosition ? <div className={classes.loadBox}><CircularProgress/></div> : <CurrentWeather />}
         {locationButton}
       </Container>
+      </ErrorBoundary>
 
       <Container className={classes.cont}>
         <FavouriteForecastList />
