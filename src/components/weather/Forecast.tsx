@@ -32,12 +32,15 @@ const useStyles = makeStyles({
     date: string
   } 
   
-
 const Forecast = ()=> {
   const ctx = useContext(WeatherContext)
   const params:any = useParams()
   const { cityName } = params;
 
+  if(ctx.error) {
+    throw new Error('Något gick fel')
+  }
+  
   useEffect(() => {
     if (ctx.selectedForecast.length > 0) {
       if (ctx.selectedForecast[0].city === cityName) {
@@ -55,6 +58,7 @@ const Forecast = ()=> {
   const loading = ctx.isLoading
   let groupedDates;
   let dataToRender:any;
+
   if(ctx.selectedForecast.length > 0){
     const groupBy = (list:any, keyGetter:any) => {
       const map = new Map();
@@ -94,13 +98,11 @@ const Forecast = ()=> {
     })
 
     const symbol = Math.min(...tempSymbol)
-    
-    
+     
 /*     let average = tempArray.reduce(function (sum:any, value:Number) {
         return sum + value;
     }, 0) / tempArray.length; */
 
-  
     let maxTemp = Math.max(...tempArray)
     let minTemp = Math.min(...tempArray)
     
@@ -110,7 +112,6 @@ const Forecast = ()=> {
     console.log(data, '👀')
     return {date:data.name, city: data.value[0].city, tempmax:maxTemp, tempmin:minTemp, symbol:symbol, id:data.value[0].id, day:dayRender }
     
-
   }
   )
  

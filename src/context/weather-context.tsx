@@ -19,6 +19,7 @@ interface WeatherContextObj {
   weatherData: any;
   selectedForecast: Weather[]
   isLoading: boolean;
+  error: boolean;
 }
 
 const WeatherContext = React.createContext<WeatherContextObj>({
@@ -26,7 +27,8 @@ const WeatherContext = React.createContext<WeatherContextObj>({
   getCurrentForecastOption: () => { },
   weatherData: [],
   selectedForecast: [],
-  isLoading: false
+  isLoading: false,
+  error: false,
 })
 
 interface Props {
@@ -37,12 +39,19 @@ export const WeatherContextProvider: React.FC<Props> = (props: Props) => {
   const [weatherData, setWeatherData] = useState<Weather[]>([])
   const [selectedForecast, setSelectedForecast] = useState<Weather[]>([]);
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState(false)
   const fullWeatherList: Weather[] = [];
+
   const getCurrentForecastOption = async (forecastOption: string) => {
+      setError(false)
       setIsLoading(true)
     try {
         const response = await fetch(`https://geocode.search.hereapi.com/v1/geocode?q=${forecastOption}&apiKey=V2olu2NpV3UrXM82R1rrKp-m8ylURma16wLVMns77Uk`)
         const data = await response.json();
+        if (data.items[0].address.countryCode !== "SWE") {
+          throw new Error('stad ej i sverige')
+        }
+        console.log(data, 'herrreeee')
         const currentStorage = getLocalStorage();
         currentStorage.splice(1,0, { city: data.items[0].address.city, long: data.items[0].position.lng , lat: data.items[0].position.lat })
         currentStorage.pop();
@@ -50,14 +59,15 @@ export const WeatherContextProvider: React.FC<Props> = (props: Props) => {
         selectedOptionForecast(data)
       } catch (err) {
         setIsLoading(false)
-        /* throw new Error('Data från Here.com gick ej att hämta!') */
+        setError(true)
         console.log(err)
       }
+      setError(false)
       setIsLoading(false)
   }
 
   const selectedOptionForecast = async (hereData:any) => {
-
+      setError(false)
       const weatherFetch = await fetch(`https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${hereData.items[0].position.lng}/lat/${hereData.items[0].position.lat}/data.json`)
       const weatherRes = await weatherFetch.json()
 
@@ -84,6 +94,7 @@ export const WeatherContextProvider: React.FC<Props> = (props: Props) => {
   }
 
   const getWeatherData = async () => {
+    setError(false)
     setIsLoading(true)
     try {
       const positions = getLocalStorage()
@@ -119,8 +130,10 @@ export const WeatherContextProvider: React.FC<Props> = (props: Props) => {
       })
 
     } catch (error) {
-      console.error(error, 'fel smhi fetch')
+      setError(true)
+      setIsLoading(false)
     }
+    setError(false)
     setIsLoading(false)
     setWeatherData(fullWeatherList)
   }
@@ -134,7 +147,8 @@ export const WeatherContextProvider: React.FC<Props> = (props: Props) => {
       getCurrentForecastOption,
       weatherData,
       selectedForecast,
-      isLoading
+      isLoading,
+      error
     }}>
       {props.children}
     </WeatherContext.Provider>

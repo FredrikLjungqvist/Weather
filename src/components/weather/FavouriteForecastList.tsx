@@ -23,10 +23,9 @@ export default class FavouriteForecastList extends Component {
          }
     });
     return map;
-}
+  }
 
 favouriteArray: any = []
-
 render() {
   
   if(this.context.weatherData.length > 0){
