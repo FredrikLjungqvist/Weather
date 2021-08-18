@@ -1,14 +1,15 @@
 import React from 'react'
 import { Card, CardContent, makeStyles } from '@material-ui/core'
+import WeatherIconList from '../WeatherIconList'
 
 const useStyles = makeStyles({
   modalStyling: {
       position: "fixed",
-      top: "30vh",
-      left: "10%",
-      width: "80%",
+      top: "10vh",
+      height: 500,
+      right: "0",
       zIndex: 100,
-      overflow: "hidden"
+      overflowY: "scroll"
   }
 })
 
@@ -19,7 +20,7 @@ const ModalCard = () => {
   return (  
     <Card className={classes.modalStyling}>
       <CardContent>
-        massa bilder
+        <WeatherIconList />
       </CardContent>
     </Card>
   )

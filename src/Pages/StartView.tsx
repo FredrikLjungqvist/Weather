@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext } from 'react'
 import CurrentWeather from '../components/weather/CurrentWeather'
 import ErrorBoundary from '../components/ErrorBoundary'
 import FavouriteForecastList from '../components/weather/FavouriteForecastList'
@@ -27,6 +27,11 @@ const useStyles = makeStyles({
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'column',
+  },
+  loadBox: {
+    display: "flex",
+    alignItems: "center",
+    minHeight: 300
   }
 });
 
@@ -79,7 +84,7 @@ const StartView = () => {
     <Container>
       <ErrorBoundary>
       <Container className={classes.topContainer}>
-        {fetchingPosition ? <div><CircularProgress/></div> : <CurrentWeather />}
+        {fetchingPosition ? <div className={classes.loadBox}><CircularProgress/></div> : <CurrentWeather />}
         {locationButton}
       </Container>
       </ErrorBoundary>

@@ -87,10 +87,10 @@ function App() {
 
   return (
     <>
+      {modalIsOpen && <ErrorModal />} 
       <Layout onToggle={toggleModalHandler} >
           <Switch>
           <Route path="/" exact>
-            {modalIsOpen && <ErrorModal />} 
               <StartView /> 
           </Route>
           <Route path="/stad/:cityName" exact>

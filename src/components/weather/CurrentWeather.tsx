@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Container, Typography } from '@material-ui/core';
+import { Container, Typography, CircularProgress } from '@material-ui/core';
 import WeatherContext from '../../context/weather-context'
 import { getLocalStorage } from '../../handlers/localstorageHandler';
 
@@ -9,6 +9,7 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    minheight: 500,
     paddingRight: 0,
     marginBottom: 100,
     marginTop: 10,
@@ -21,9 +22,10 @@ const useStyles = makeStyles({
   }
 });
 
+
+
 export default function CurrentWeather() {
   const ctx = useContext(WeatherContext)
-
   if(ctx.error) {
     throw new Error('smhi kunde inte hämta datan')
   }
@@ -44,11 +46,11 @@ export default function CurrentWeather() {
             {ctx.weatherData.length > 0 ? (
               <Container className={classes.weatherContainer}>
                 <Typography variant="h1" component="h2">
-                  {ctx.weatherData[0][0].temp}°
+                  {Math.floor(ctx.weatherData[0][0].temp)}°
                 </Typography>
                 <img width="200" src={require(`../../assets/icons/${ctx.weatherData[0][0].weatherSymbol}.png`).default} alt="" />
               </Container>)
-            : "loading"}
+            : <CircularProgress />} 
       </Container>
     </> 
   );

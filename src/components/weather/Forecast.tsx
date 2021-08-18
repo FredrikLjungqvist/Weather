@@ -16,6 +16,7 @@ const useStyles = makeStyles({
     },
     cont: {
       display: 'flex',
+      justifyContent: 'center',
       alignItems: 'center',
       flexDirection: 'row',
       flexWrap:'wrap'
@@ -121,7 +122,9 @@ const Forecast = ()=> {
       <>
         {ctx.selectedForecast.length > 0 &&
         <>
+        <Container className={classes.cont}>
         <h1>{ctx.selectedForecast[0].city}</h1>
+        </Container>
         <Container className={classes.cont}>
           {dataToRender.map((data:DataToRender) => ( 
             <ForecastCard

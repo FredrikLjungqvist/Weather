@@ -1,5 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { makeStyles, Container, TableContainer, Table, TableHead, TableCell, TableRow, TableBody, Hidden } from '@material-ui/core'
+import { makeStyles, Container, TableContainer, Table, TableHead, TableCell, TableRow, TableBody, Hidden, IconButton, Typography, CircularProgress } from '@material-ui/core'
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import WeatherContext from '../../context/weather-context'
 import { useParams, useHistory } from 'react-router-dom'
 import { Weather } from '../../context/weather-context'
@@ -8,6 +10,10 @@ import { Weather } from '../../context/weather-context'
 const useStyles = makeStyles({
   table: {
     maxWidth: 800,
+  },
+  arrowContainer: {
+    display: "flex",
+    justifyContent: "center"
   }
 })
 
@@ -57,11 +63,6 @@ const CityForecastDetails = (props:any) => {
     history.push(`/stad/${params.cityName}/datum/${currentDate.toISOString().substr(0,10)}`)
   };
    
-
-  console.log(currentDate, '🥲')
-  console.log(appDate, 'appDate')
-  console.log(todaysDate, appDate)
-
   function difference(date1: Date, date2: Date) {  
     const date1utc = Date.UTC(date1.getFullYear(), date1.getMonth(), date1.getDate());
     const date2utc = Date.UTC(date2.getFullYear(), date2.getMonth(), date2.getDate());
@@ -75,13 +76,17 @@ const CityForecastDetails = (props:any) => {
 
 
   return (
-    <Container style={{ width: "100vw", display: "flex", alignItems: "center", flexDirection: "column" }} maxWidth='lg' disableGutters>
+    <Container style={{ width: "100vw", display: "flex", alignItems: "center", flexDirection: "column", marginBottom: 70 }} maxWidth='lg' disableGutters>
       {!loading && ctx.selectedForecast.length > 0 ?
         <>
-        <h1>{ctx.selectedForecast[0].city}</h1>
+        <Typography variant="h3" component="h2">
+          {ctx.selectedForecast[0].city}
+        </Typography>
         <h3>{currentDate.toLocaleDateString('se-SE', { weekday: 'long', day: 'numeric', month: 'long'  })}</h3>
-          {todaysDate.toISOString().substr(0,10) !== appDate ? <button onClick={paginationBackwardHandler}>Föregående Dag</button> : undefined }
-          { groupedDataLength - 1 !== time_difference ? <button onClick={paginationForwardHandler}>Nästa Dag</button> : undefined }
+        <Container className={classes.arrowContainer}>
+          {todaysDate.toISOString().substr(0,10) !== appDate ? <IconButton onClick={paginationBackwardHandler}><ArrowBackIosIcon /></IconButton> : undefined }
+          { groupedDataLength - 1 !== time_difference ? <IconButton onClick={paginationForwardHandler}><ArrowForwardIosIcon /></IconButton> : undefined }
+        </Container>
           <TableContainer className={classes.table}  >
             <Table padding="none" size="small" aria-label="simple table">
               <TableHead>
@@ -119,7 +124,7 @@ const CityForecastDetails = (props:any) => {
               </TableBody>
             </Table>
           </TableContainer >
-        </> : <h1>LOADING....</h1>}
+        </> : <CircularProgress />}
     </Container>
     
 
