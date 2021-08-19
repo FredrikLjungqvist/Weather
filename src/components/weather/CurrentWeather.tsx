@@ -3,6 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Container, Typography, CircularProgress } from '@material-ui/core';
 import WeatherContext from '../../context/weather-context'
 import { getLocalStorage } from '../../handlers/localstorageHandler';
+import {  Link, useParams} from "react-router-dom";
+
 
 const useStyles = makeStyles({
   root: {
@@ -12,7 +14,14 @@ const useStyles = makeStyles({
     minheight: 500,
     paddingRight: 0,
     marginBottom: 100,
+    
     marginTop: 10,
+  },
+  link: {
+    textDecoration: 'none',
+    margin: '30px',
+    color: 'black',
+    
   },
   weatherContainer: {
     display: "flex",
@@ -31,27 +40,29 @@ export default function CurrentWeather() {
   }
 
   let currentPositionInfo = getLocalStorage()
-  
+  let date = new Date
   const classes = useStyles();
   return (
     <>
-      <Container className={classes.root}>
-            <Typography gutterBottom variant="h1" component="h2">
-                { ctx.weatherData.length > 0 && localStorage.getItem("positions") === null ? 'Loading': 
-                <div>
-                  {currentPositionInfo[0].city}
-                </div>
-                }
-            </Typography>
-            {ctx.weatherData.length > 0 ? (
-              <Container className={classes.weatherContainer}>
-                <Typography variant="h1" component="h2">
-                  {Math.floor(ctx.weatherData[0][0].temp)}°
-                </Typography>
-                <img width="200" src={require(`../../assets/icons/${ctx.weatherData[0][0].weatherSymbol}.png`).default} alt="" />
-              </Container>)
-            : <CircularProgress />} 
-      </Container>
+      <Link className={classes.link} to={`/stad/${currentPositionInfo[0].city}/datum/${date}`}>
+        <Container className={classes.root}>
+              <Typography gutterBottom variant="h1" component="h2">
+                  { ctx.weatherData.length > 0 && localStorage.getItem("positions") === null ? 'Loading': 
+                  <div>
+                    {currentPositionInfo[0].city}
+                  </div>
+                  }
+              </Typography>
+              {ctx.weatherData.length > 0 ? (
+                <Container className={classes.weatherContainer}>
+                  <Typography variant="h1" component="h2">
+                    {Math.floor(ctx.weatherData[0][0].temp)}°
+                  </Typography>
+                  <img width="200" src={require(`../../assets/icons/${ctx.weatherData[0][0].weatherSymbol}.png`).default} alt="" />
+                </Container>)
+              : <CircularProgress />} 
+        </Container>
+      </Link>
     </> 
   );
   
