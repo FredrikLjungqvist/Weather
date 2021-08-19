@@ -19,6 +19,7 @@ const useStyles = makeStyles({
   link: {
     textDecoration: 'none',
     margin: '30px',
+    
   },
   bullet: {
     display: 'inline-block',
@@ -26,6 +27,10 @@ const useStyles = makeStyles({
     transform: 'scale(0.8)',
   },
   title: {
+    fontSize: '1vw',
+    
+  },
+  date : {
     fontSize: 14,
   },
   pos: {
@@ -51,10 +56,10 @@ const ForecastCard = (props: Props) => {
     <Link key={props.id} className={classes.link} to={`/stad/${props.city}/datum/${props.date}`}>
     <Card className={classes.root}>
       <CardContent>
-        <Typography variant="h5" component="h2">
+        <Typography className={classes.title} variant="h5" component="h2">
           {params.cityName ? props.day : props.city}
         </Typography>
-        <Typography className={classes.title} color="textSecondary" gutterBottom>
+        <Typography className={classes.date} color="textSecondary" gutterBottom>
           {props.date}
         </Typography>
         <Typography className={classes.pos} color="textPrimary">
