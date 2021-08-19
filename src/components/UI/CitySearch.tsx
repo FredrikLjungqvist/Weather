@@ -2,20 +2,16 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import myArray from '../../citys';
 import { useHistory } from 'react-router-dom'
-import { useContext } from 'react'
-import WeatherContext from '../../context/weather-context';
 
 export default function CitySearch() {
-  const ctx = useContext(WeatherContext);
   let history = useHistory();
 
-  const toForecastHandler = ( event: any, value: any) => {
+  const toForecastHandler = ( event: object, value: String) => {
     // om value är === någon stad i listan. 
     if( value === null) {
-      return console.log("värdet var ogiltligt")
+      throw new Error('Du måste skriva in en stad!')
     }
       history.push(`/stad/${value}`)
-      
   }
 
     return (

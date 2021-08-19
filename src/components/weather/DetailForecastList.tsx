@@ -6,7 +6,7 @@ import WeatherContext from '../../context/weather-context'
 import DetailForecastItem from './DetailForecastItem';
 import { useParams, useHistory } from 'react-router-dom'
 import { Weather } from '../../context/weather-context'
-
+import { MyType } from '../../App'
 
 const useStyles = makeStyles({
   table: {
@@ -18,9 +18,14 @@ const useStyles = makeStyles({
   }
 })
 
-const CityForecastDetails = (props:any) => {
+type Props = {
+  sortedData: MyType[]
+}
+
+
+const CityForecastDetails: React.FC<Props> = (props) => {
   const history = useHistory();
-  const params:any = useParams()
+  const params: { cityName: string, currentDate: string } = useParams()
   const [appDate, setAppDate] = useState(params.currentDate)
   let currentDate = new Date(appDate)
   let todaysDate = new Date()
@@ -31,12 +36,11 @@ const CityForecastDetails = (props:any) => {
   const loading = ctx.isLoading
   const { cityName } = params
   let filteredWeatherData: Weather[] = [];
-  let groupedDataLength;
+  let groupedDataLength: number = 0
   if (ctx.selectedForecast.length > 0) {
 
-    filteredWeatherData = ctx.selectedForecast.filter((weather: any) => weather.time.getDate() === currentDate.getDate())
-    console.log(filteredWeatherData)
-    groupedDataLength = props.groupedData.length
+    filteredWeatherData = ctx.selectedForecast.filter((weather: Weather) => weather.time.getDate() === currentDate.getDate())
+    groupedDataLength = props.sortedData.length
   } 
 
   useEffect(() => {
@@ -72,8 +76,6 @@ const CityForecastDetails = (props:any) => {
   const date1 = new Date(todaysDate.toISOString().substr(0,10)),
         date2 = new Date(appDate),
         time_difference = difference(date1,date2)
-  console.log(time_difference)
-
 
   return (
     <Container style={{ width: "100vw", display: "flex", alignItems: "center", flexDirection: "column", marginBottom: 70 }} maxWidth='lg' disableGutters>

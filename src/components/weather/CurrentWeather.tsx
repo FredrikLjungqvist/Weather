@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Container, Typography, CircularProgress } from '@material-ui/core';
 import WeatherContext from '../../context/weather-context'
 import { getLocalStorage } from '../../handlers/localstorageHandler';
-import {  Link, useParams} from "react-router-dom";
+import {  Link } from "react-router-dom";
 
 
 const useStyles = makeStyles({
@@ -40,7 +40,7 @@ export default function CurrentWeather() {
   }
 
   let currentPositionInfo = getLocalStorage()
-  let date = new Date
+  let date = new Date()
   const classes = useStyles();
   return (
     <>

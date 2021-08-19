@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { TableCell, TableRow, Hidden } from '@material-ui/core'
+import { TableCell, Hidden } from '@material-ui/core'
 import { Weather } from '../../context/weather-context'
 
 

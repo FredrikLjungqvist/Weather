@@ -1,4 +1,4 @@
-import React, { Component, CSSProperties } from 'react'
+import React, { Component } from 'react'
 import { AppBar, Toolbar, Typography, Container } from '@material-ui/core'
 import { NavLink } from 'react-router-dom'
 import Search from './CitySearch'

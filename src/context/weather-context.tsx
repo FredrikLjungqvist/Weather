@@ -17,7 +17,7 @@ interface WeatherContextObj {
   getWeatherData: () => void;
   getCurrentForecastOption: (forecastOption: string) => void;
   weatherData: any;
-  selectedForecast: Weather[]
+  selectedForecast: Weather[];
   isLoading: boolean;
   error: boolean;
 }
@@ -34,7 +34,6 @@ const WeatherContext = React.createContext<WeatherContextObj>({
 interface Props {
   children: JSX.Element
 }
-
 
 export const WeatherContextProvider: React.FC<Props> = (props: Props) => {
   const [weatherData, setWeatherData] = useState<Weather[]>([])
@@ -65,18 +64,15 @@ export const WeatherContextProvider: React.FC<Props> = (props: Props) => {
           const storageCopy = currentStorage.slice(1);
           let double = storageCopy.filter((city) => city.city !== forecastOption)
           double.unshift({city: data.items[0].address.city, long: data.items[0].position.lng , lat: data.items[0].position.lat } )
-          console.log(double, "DOUBLE")
           let dataToSave = []
             dataToSave.push(currentStorage[0], ...double)
           setLocalStorage(dataToSave)
-        }
-        
+        } 
         selectedOptionForecast(data)
 
       } catch (err) {
         setIsLoading(false)
         setError(true)
-        console.log(err)
       }
       setError(false)
       setIsLoading(false)
@@ -86,7 +82,6 @@ export const WeatherContextProvider: React.FC<Props> = (props: Props) => {
       setError(false)
       const weatherFetch = await fetch(`https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${hereData.items[0].position.lng}/lat/${hereData.items[0].position.lat}/data.json`)
       const weatherRes = await weatherFetch.json()
-
       const cityOptionWeatherData = weatherRes.timeSeries.map((option:any) => {
         const temp = option.parameters.find((i: { name: string }) => i.name === "t")
         const symbol = option.parameters.find((i: { name: string }) => i.name === "Wsymb2")
@@ -144,7 +139,6 @@ export const WeatherContextProvider: React.FC<Props> = (props: Props) => {
           }
         })
         fullWeatherList.push(transformedWeatherList)
-        console.log(fullWeatherList, '🤓')
       })
 
     } catch (error) {
