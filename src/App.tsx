@@ -42,13 +42,11 @@ function App() {
   
   groupedDates = groupBy(ctx.selectedForecast, (date: { time: Date; }) => date.time.toISOString().substr(0,10))
 
-  let output = groupedDates.keys()
-  console.log(output)
+
   let dataArray = Array.from(groupedDates, ([name, value]) => ({ name, value }));
 
-  console.log(dataArray)
-  let flat = dataArray.flat()
-  console.log(flat)
+
+
 
   dataToRender = dataArray.map((data)=>
   {
@@ -74,7 +72,7 @@ function App() {
     const day = new Date(data.name)
     
     const dayRender = day.toLocaleDateString('se-SE', { weekday: 'long' });
-    console.log(data, '👀')
+  
     return {date:data.name, city: data.value[0].city, tempmax:maxTemp, tempmin:minTemp, symbol:symbol, id:data.value[0].id, day:dayRender }
     
 

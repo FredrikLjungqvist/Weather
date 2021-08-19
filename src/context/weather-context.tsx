@@ -5,7 +5,7 @@ import {  getLocalStorage, setLocalStorage } from '../handlers/localstorageHandl
 export interface Weather {
   id: string;
   city: string;
-  time: object;
+  time: Date;
   precipitation: number;
   temp: number;
   windSpeed: number;
@@ -35,12 +35,13 @@ interface Props {
   children: JSX.Element
 }
 
+
 export const WeatherContextProvider: React.FC<Props> = (props: Props) => {
   const [weatherData, setWeatherData] = useState<Weather[]>([])
   const [selectedForecast, setSelectedForecast] = useState<Weather[]>([]);
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(false)
-  const fullWeatherList: Weather[] = [];
+  let fullWeatherList: Weather[] = [];
 
   const getCurrentForecastOption = async (forecastOption: string) => {
       setError(false)
@@ -51,12 +52,27 @@ export const WeatherContextProvider: React.FC<Props> = (props: Props) => {
         if (data.items[0].address.countryCode !== "SWE") {
           throw new Error('stad ej i sverige')
         }
-        console.log(data, 'herrreeee')
+
         const currentStorage = getLocalStorage();
-        currentStorage.splice(1,0, { city: data.items[0].address.city, long: data.items[0].position.lng , lat: data.items[0].position.lat })
-        currentStorage.pop();
-        setLocalStorage(currentStorage)
+        const storageCopy = currentStorage.slice(1);
+        const matchingCitys = storageCopy.find((city) => city.city === forecastOption)
+
+        if (matchingCitys === undefined) {
+          currentStorage.splice(1,0, { city: data.items[0].address.city, long: data.items[0].position.lng , lat: data.items[0].position.lat })
+          currentStorage.pop();
+          setLocalStorage(currentStorage)
+        } else {
+          const storageCopy = currentStorage.slice(1);
+          let double = storageCopy.filter((city) => city.city !== forecastOption)
+          double.unshift({city: data.items[0].address.city, long: data.items[0].position.lng , lat: data.items[0].position.lat } )
+          console.log(double, "DOUBLE")
+          let dataToSave = []
+            dataToSave.push(currentStorage[0], ...double)
+          setLocalStorage(dataToSave)
+        }
+        
         selectedOptionForecast(data)
+
       } catch (err) {
         setIsLoading(false)
         setError(true)
@@ -97,6 +113,7 @@ export const WeatherContextProvider: React.FC<Props> = (props: Props) => {
     setError(false)
     setIsLoading(true)
     try {
+      fullWeatherList = [];
       const positions = getLocalStorage()
       const weatherList = await Promise.all(
         positions.map(async (location) => {
@@ -127,6 +144,7 @@ export const WeatherContextProvider: React.FC<Props> = (props: Props) => {
           }
         })
         fullWeatherList.push(transformedWeatherList)
+        console.log(fullWeatherList, '🤓')
       })
 
     } catch (error) {
@@ -138,8 +156,7 @@ export const WeatherContextProvider: React.FC<Props> = (props: Props) => {
     setWeatherData(fullWeatherList)
   }
 
-
- 
+  
 
   return (
     <WeatherContext.Provider value={{

@@ -1,4 +1,4 @@
-import CityForecastDetails from '../components/weather/CityForecastDetails'
+import DetailForecastList from '../components/weather/DetailForecastList'
 import React, { CSSProperties } from 'react'
 
 const styles: CSSProperties = {
@@ -10,7 +10,7 @@ const styles: CSSProperties = {
 const ForecastDetailView = (props:any) => {
   return (
     <div style={styles}>
-      <CityForecastDetails groupedData={props.groupedData} />
+      <DetailForecastList groupedData={props.groupedData} />
     </div>
   )
 }

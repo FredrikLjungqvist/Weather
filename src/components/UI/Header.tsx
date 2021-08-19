@@ -17,8 +17,9 @@ export default class Header extends Component<Props> {
       alignItems: "center",
       justifyContent: "space-between"
     }
+
     return (
-      <AppBar color="transparent">
+      <AppBar color="primary">
         <Toolbar>
           <Container style={classes} maxWidth="lg">
             <NavLink className={logoStyle.logo} to="/">
