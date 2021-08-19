@@ -1,8 +1,6 @@
-
 import { Grid } from '@material-ui/core'
 
-
-const WeatherIconItem = (props:any) => {
+const WeatherIconItem = (props: {imgIcon: number, desc: string}) => {
   return (
     <>
     <Grid item>

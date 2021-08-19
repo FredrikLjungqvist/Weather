@@ -53,7 +53,7 @@ interface Props {
 }
 
 const ForecastCard = (props: Props) => {
-  const params:any = useParams()
+  const params: { cityName: string, currentDate: string } = useParams()
   const classes = useStyles();
 
   return (

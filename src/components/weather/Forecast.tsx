@@ -35,7 +35,7 @@ const useStyles = makeStyles({
   
 const Forecast = ()=> {
   const ctx = useContext(WeatherContext)
-  const params:any = useParams()
+  const params: { cityName: string, currentDate: string } = useParams()
   const { cityName } = params;
 
   if(ctx.error) {
@@ -56,7 +56,6 @@ const Forecast = ()=> {
   }, [cityName])
 
   const classes = useStyles();
-  const loading = ctx.isLoading
   let groupedDates;
   let dataToRender:any;
 

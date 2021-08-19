@@ -11,11 +11,9 @@ export default class ErrorBoundary extends Component<Props, State> {
   state = {
     error: undefined,
     errorMessage: ''
-
   };
 
 componentDidCatch(error:Error, errorInfo: ErrorInfo) {
-  console.log(error.message)
   this.setState({ error, errorMessage: error.message })
 }
 

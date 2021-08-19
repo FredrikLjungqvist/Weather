@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useContext } from 'react'
 import CurrentWeather from '../components/weather/CurrentWeather'
 import ErrorBoundary from '../components/ErrorBoundary'
 import FavouriteForecastList from '../components/weather/FavouriteForecastList'
