@@ -4,14 +4,16 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { WeatherContextProvider } from './context/weather-context'
+import { LocationContextProvider } from './context/location-context';
 import { BrowserRouter } from 'react-router-dom';
-import ErrorBoundary from './components/ErrorBoundary'
 
 ReactDOM.render(
   <BrowserRouter>
-    <WeatherContextProvider>
-      <App />
-    </WeatherContextProvider>
+    <LocationContextProvider>
+      <WeatherContextProvider>
+        <App />
+      </WeatherContextProvider>
+    </LocationContextProvider>
   </BrowserRouter>
   , document.getElementById('root'));
 

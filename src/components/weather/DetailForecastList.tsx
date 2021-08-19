@@ -3,6 +3,7 @@ import { makeStyles, Container, TableContainer, Table, TableHead, TableCell, Tab
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import WeatherContext from '../../context/weather-context'
+import DetailForecastItem from './DetailForecastItem';
 import { useParams, useHistory } from 'react-router-dom'
 import { Weather } from '../../context/weather-context'
 
@@ -35,7 +36,6 @@ const CityForecastDetails = (props:any) => {
 
     filteredWeatherData = ctx.selectedForecast.filter((weather: any) => weather.time.getDate() === currentDate.getDate())
     console.log(filteredWeatherData)
-    
     groupedDataLength = props.groupedData.length
   } 
 
@@ -102,25 +102,18 @@ const CityForecastDetails = (props:any) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                
-                {filteredWeatherData.map((row: any) => (
-                  <TableRow key={row.id}>
-                    <TableCell align="center" component="th" >
-                      {row.time.getHours()}
-                    </TableCell>
-                    <TableCell align="center" component="th" >
-                      <img width="100" src={require(`../../assets/icons/${row.weatherSymbol}.png`).default} alt="" />
-                    </TableCell>
-                    <TableCell align="center">
-                      {Math.floor(row.temp)}°
-                    </TableCell>
-                    <TableCell align="center">{row.precipitation} mm</TableCell>
-                    <TableCell align="center">{row.windSpeed} m/s</TableCell>
-                    <Hidden xsDown>
-                      <TableCell align="center">{row.humidity} %</TableCell>
-                    </Hidden>
-                  </TableRow>
-                ))}
+                {filteredWeatherData.map((row: Weather) => 
+                <TableRow key={row.id}>
+                  <DetailForecastItem
+                    id={row.id}
+                    time={row.time}
+                    weatherSymbol={row.weatherSymbol}
+                    temp={row.temp}
+                    precipitation={row.precipitation}
+                    windSpeed={row.windSpeed}
+                    humidity={row.humidity}
+                    city={row.city} /> 
+                </TableRow> )}
               </TableBody>
             </Table>
           </TableContainer >
