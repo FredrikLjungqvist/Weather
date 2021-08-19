@@ -4,6 +4,7 @@ import {Typography, CardContent, Card, makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles({
   root: {
+    height: 250,
     minWidth: 150,
     maxWidth: 150,
     textAlign: 'center',
@@ -27,7 +28,10 @@ const useStyles = makeStyles({
     transform: 'scale(0.8)',
   },
   title: {
-    fontSize: '1vw',
+    fontSize: '120%',
+    fontWeight: 'bold',
+    height: 50,
+    textTransform: 'capitalize',
     
   },
   date : {
