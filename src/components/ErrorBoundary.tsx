@@ -1,29 +1,25 @@
-import React, { Component, CSSProperties, ErrorInfo } from 'react'
+import React, { Component, CSSProperties } from 'react'
 import { Container, Button } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 interface Props {}
 interface State {
-    error?: Error;
-    errorMessage: string;
+    hasError: boolean;
 }
 
 export default class ErrorBoundary extends Component<Props, State> {
   state = {
-    error: undefined,
-    errorMessage: ''
-
+    hasError: false
   };
 
-componentDidCatch(error:Error, errorInfo: ErrorInfo) {
-  console.log(error.message)
-  this.setState({ error, errorMessage: error.message })
+componentDidCatch() {
+  this.setState({ hasError: true })
 }
 
   render() {
-    if (this.state.error) {
+    if (this.state.hasError) {
       return (
         <Container maxWidth="lg" style={styles}>
-          <h1>{this.state.errorMessage }</h1>
+          <h1>Något gick fel...</h1>
           <Link style={linkStyles} to="/">
             <Button variant="contained" color="secondary">Tillbaka till startsidan</Button>
           </Link>

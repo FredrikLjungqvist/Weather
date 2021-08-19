@@ -39,7 +39,7 @@ const Forecast = ()=> {
   const { cityName } = params;
 
   if(ctx.error) {
-    throw new Error('Sök bara på svenska städer')
+    throw new Error('Något gick fel')
   }
   
   useEffect(() => {
