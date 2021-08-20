@@ -12,7 +12,6 @@ export interface Weather {
   humidity: number;
   weatherSymbol: number;
 }
-
 interface WeatherContextObj {
   getWeatherData: () => void;
   getCurrentForecastOption: (forecastOption: string) => void;
@@ -31,6 +30,17 @@ const WeatherContext = React.createContext<WeatherContextObj>({
   error: false,
 })
 
+interface Hereobject{
+  city:string;
+  lng:number;
+  lat:number;
+  }
+interface nest{
+  [key:string]: Hereobject
+}
+interface Heredata{
+  [key:string]: [key:nest];
+}
 interface Props {
   children: JSX.Element
 }
@@ -78,7 +88,7 @@ export const WeatherContextProvider: React.FC<Props> = (props: Props) => {
       setIsLoading(false)
   }
 
-  const selectedOptionForecast = async (hereData:any) => {
+  const selectedOptionForecast = async (hereData:Heredata) => {
       setError(false)
       const weatherFetch = await fetch(`https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${hereData.items[0].position.lng}/lat/${hereData.items[0].position.lat}/data.json`)
       const weatherRes = await weatherFetch.json()
