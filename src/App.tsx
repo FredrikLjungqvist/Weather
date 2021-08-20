@@ -12,6 +12,16 @@ import ErrorBoundary from './components/ErrorBoundary';
 import { Weather } from './context/weather-context'
 import ErrorModal from './components/UI/Modal'
 
+export interface MyType {
+  city: string
+  date: string
+  day: string
+  id: string
+  symbol: number
+  tempmax: number
+  tempmin: number
+}
+
 
 function App() {
   const ctx = useContext(WeatherContext);
@@ -19,15 +29,16 @@ function App() {
   setPositionData()
   useEffect(() => {
     ctx.getWeatherData()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   
-  let groupedDates;
-  let dataToRender:any;
+  let groupedDates: Map<string, Weather[]>;
+  let dataToRender: MyType[] = [];
   
   if(ctx.selectedForecast.length > 0){
-    const groupBy = (list:any, keyGetter:any) => {
-      const map = new Map();
-      list.forEach((item:any) => {
+    const groupBy = (list:Weather[], keyGetter: (item: Weather) => string) => {
+      const map = new Map<string, Weather[]>();
+      list.forEach((item:Weather) => {
         const key = keyGetter(item);
         const collection = map.get(key);
         if (!collection) {
@@ -39,16 +50,9 @@ function App() {
       return map;
     }
 
-  
   groupedDates = groupBy(ctx.selectedForecast, (date: { time: Date; }) => date.time.toISOString().substr(0,10))
 
-  let output = groupedDates.keys()
-  console.log(output)
   let dataArray = Array.from(groupedDates, ([name, value]) => ({ name, value }));
-
-  console.log(dataArray)
-  let flat = dataArray.flat()
-  console.log(flat)
 
   dataToRender = dataArray.map((data)=>
   {
@@ -63,10 +67,6 @@ function App() {
     })
 
     const symbol = Math.min(...tempSymbol)
-     
-/*     let average = tempArray.reduce(function (sum:any, value:Number) {
-        return sum + value;
-    }, 0) / tempArray.length; */
 
     let maxTemp = Math.max(...tempArray)
     let minTemp = Math.min(...tempArray)
@@ -74,13 +74,11 @@ function App() {
     const day = new Date(data.name)
     
     const dayRender = day.toLocaleDateString('se-SE', { weekday: 'long' });
-    console.log(data, '👀')
+  
     return {date:data.name, city: data.value[0].city, tempmax:maxTemp, tempmin:minTemp, symbol:symbol, id:data.value[0].id, day:dayRender }
     
-
   }
   )
-  
 }
 
   const toggleModalHandler = () => setModalIsOpen(!modalIsOpen)
@@ -99,9 +97,13 @@ function App() {
             </ErrorBoundary>
           </Route>
           <Route path="/stad/:cityName/datum/:currentDate">
+
           <ErrorBoundary>
             <ForecastDetailView groupedData={dataToRender} />
             </ErrorBoundary>
+
+            <ForecastDetailView sortedData={dataToRender} />
+
           </Route>
           <Route path="*">
             <NotFound />

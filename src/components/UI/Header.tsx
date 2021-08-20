@@ -1,4 +1,4 @@
-import React, { Component, CSSProperties } from 'react'
+import React, { Component } from 'react'
 import { AppBar, Toolbar, Typography, Container } from '@material-ui/core'
 import { NavLink } from 'react-router-dom'
 import Search from './CitySearch'
@@ -17,8 +17,9 @@ export default class Header extends Component<Props> {
       alignItems: "center",
       justifyContent: "space-between"
     }
+
     return (
-      <AppBar color="transparent">
+      <AppBar color="primary">
         <Toolbar>
           <Container style={classes} maxWidth="lg">
             <NavLink className={logoStyle.logo} to="/">

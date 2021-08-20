@@ -1,14 +1,14 @@
-import React, { CSSProperties} from 'react'
+import { CSSProperties} from 'react'
 import WeatherIconItem from './WeatherIconItem'
 import { iconDesc } from '../iconDesc'
 import { Grid } from '@material-ui/core'
+import { v4 as uuidv4 } from 'uuid'
 const overflow: CSSProperties = {
 }
 const WeatherIconList = () => {
-  console.log(iconDesc)
   return (
     <>
-      {iconDesc.map((desc) => <Grid style={overflow} container alignItems="center" direction="row"><WeatherIconItem desc={desc.title} imgIcon={desc.img} /></Grid>)}
+      {iconDesc.map((desc) => <Grid key={uuidv4()} style={overflow} container alignItems="center" direction="row"><WeatherIconItem desc={desc.title} imgIcon={desc.img} /></Grid>)}
     </>
   )
 }

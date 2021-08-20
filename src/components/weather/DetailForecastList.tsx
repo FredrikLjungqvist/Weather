@@ -3,9 +3,10 @@ import { makeStyles, Container, TableContainer, Table, TableHead, TableCell, Tab
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import WeatherContext from '../../context/weather-context'
+import DetailForecastItem from './DetailForecastItem';
 import { useParams, useHistory } from 'react-router-dom'
 import { Weather } from '../../context/weather-context'
-
+import { MyType } from '../../App'
 
 const useStyles = makeStyles({
   table: {
@@ -17,9 +18,14 @@ const useStyles = makeStyles({
   }
 })
 
-const CityForecastDetails = (props:any) => {
+type Props = {
+  sortedData: MyType[]
+}
+
+
+const CityForecastDetails: React.FC<Props> = (props) => {
   const history = useHistory();
-  const params:any = useParams()
+  const params: { cityName: string, currentDate: string } = useParams()
   const [appDate, setAppDate] = useState(params.currentDate)
   let currentDate = new Date(appDate)
   let todaysDate = new Date()
@@ -30,13 +36,11 @@ const CityForecastDetails = (props:any) => {
   const loading = ctx.isLoading
   const { cityName } = params
   let filteredWeatherData: Weather[] = [];
-  let groupedDataLength;
+  let groupedDataLength: number = 0
   if (ctx.selectedForecast.length > 0) {
 
-    filteredWeatherData = ctx.selectedForecast.filter((weather: any) => weather.time.getDate() === currentDate.getDate())
-    console.log(filteredWeatherData)
-    
-    groupedDataLength = props.groupedData.length
+    filteredWeatherData = ctx.selectedForecast.filter((weather: Weather) => weather.time.getDate() === currentDate.getDate())
+    groupedDataLength = props.sortedData.length
   } 
 
   useEffect(() => {
@@ -72,8 +76,6 @@ const CityForecastDetails = (props:any) => {
   const date1 = new Date(todaysDate.toISOString().substr(0,10)),
         date2 = new Date(appDate),
         time_difference = difference(date1,date2)
-  console.log(time_difference)
-
 
   return (
     <Container style={{ width: "100vw", display: "flex", alignItems: "center", flexDirection: "column", marginBottom: 70 }} maxWidth='lg' disableGutters>
@@ -102,25 +104,18 @@ const CityForecastDetails = (props:any) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                
-                {filteredWeatherData.map((row: any) => (
-                  <TableRow key={row.id}>
-                    <TableCell align="center" component="th" >
-                      {row.time.getHours()}
-                    </TableCell>
-                    <TableCell align="center" component="th" >
-                      <img width="100" src={require(`../../assets/icons/${row.weatherSymbol}.png`).default} alt="" />
-                    </TableCell>
-                    <TableCell align="center">
-                      {Math.floor(row.temp)}°
-                    </TableCell>
-                    <TableCell align="center">{row.precipitation} mm</TableCell>
-                    <TableCell align="center">{row.windSpeed} m/s</TableCell>
-                    <Hidden xsDown>
-                      <TableCell align="center">{row.humidity} %</TableCell>
-                    </Hidden>
-                  </TableRow>
-                ))}
+                {filteredWeatherData.map((row: Weather) => 
+                <TableRow key={row.id}>
+                  <DetailForecastItem
+                    id={row.id}
+                    time={row.time}
+                    weatherSymbol={row.weatherSymbol}
+                    temp={row.temp}
+                    precipitation={row.precipitation}
+                    windSpeed={row.windSpeed}
+                    humidity={row.humidity}
+                    city={row.city} /> 
+                </TableRow> )}
               </TableBody>
             </Table>
           </TableContainer >

@@ -60,7 +60,7 @@ render() {
       }
       )
       this.favouriteArray.push(this.dataToRender[0])
-      console.log(this.favouriteArray, 'hej', index)
+  
     })
   
   }
