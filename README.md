@@ -5,7 +5,7 @@ Git Repo: https://github.com/FredrikLjungqvist/Weather/
 Before start, run npm i
 To start, run npm start
 ## Beskrivning
-En väderapp som hämtar datat från SMHI och visar väder på en av användaren vald plats. Appen anväder sig även av geolocation api för att hämta platsdata om användren så önskar. Appen anropar totalt 3 olika APIer för att hämta plats och väderdata.
+En väderapp som hämtar datan från SMHI och visar väder på en av användaren vald plats. Appen använder sig även av geolocation api för att hämta platsdata om användaren så önskar. Appen anropar totalt 3 olika APIer för att hämta plats och väderdata.
 ## Apier
 Vi andvänder oss av Here geolocation API för att få koordinater för den plats där användaren vill veta vädret. Vi hanterar fel med hjälp av try/catch.
 
