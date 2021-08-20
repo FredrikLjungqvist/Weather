@@ -8,19 +8,24 @@ const backdropStyle: CSSProperties = {
   left: 0,
   width: "100%",
   height: "100vh",
-  zIndex: 10,
+  zIndex: 100,
   background: "rgba(0, 0, 0, 0.75)"
 }
-const ModalBackdrop = () => {
-  return <div style={backdropStyle} />;
+
+interface Props {
+  onClose: () => void;
+}
+
+const ModalBackdrop = (props:Props) => {
+  return <div onClick={props.onClose} style={backdropStyle} />;
 };
 
-const ErrorModal = () => {
+const IconModal = (props:Props) => {
 
   return (
     <>
     {ReactDOM.createPortal(
-      <ModalBackdrop />,
+      <ModalBackdrop onClose={props.onClose} />,
       document.getElementById('backdrop') as HTMLElement
     )}
       {ReactDOM.createPortal(
@@ -31,4 +36,4 @@ const ErrorModal = () => {
   )
 }
 
-export default ErrorModal
+export default IconModal

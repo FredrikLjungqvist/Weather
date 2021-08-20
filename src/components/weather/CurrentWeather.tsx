@@ -11,11 +11,6 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    minheight: 500,
-    paddingRight: 0,
-    marginBottom: 100,
-    
-    marginTop: 10,
   },
   link: {
     textDecoration: 'none',
