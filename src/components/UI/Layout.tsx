@@ -18,12 +18,12 @@ export default class Layout extends Component<Props> {
     return (
       <>
         <CssBaseline>
-         <Header onToggle={this.props.onToggle} />
-         <Container style={styles} maxWidth="lg" disableGutters>
+        { <Header onToggle={this.props.onToggle} />}
+       {<Container style={styles} maxWidth="lg" disableGutters>
            <>
            {this.props.children}
            </>
-         </Container >
+         </Container >}
          <Footer />
         </CssBaseline> 
       </>

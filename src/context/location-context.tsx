@@ -4,12 +4,14 @@ interface PositionContext {
   checkDevicePosition: () => void;
   loadingLocation: boolean;
   locationIsFetched: boolean;
+  positionDenied: boolean;
 }
 
 const LocationContext = React.createContext<PositionContext>({
   checkDevicePosition: () => { },
   loadingLocation: false,
   locationIsFetched: false,
+  positionDenied: false,
 })
 
 interface Props {
@@ -26,14 +28,16 @@ const apiKey = "V2olu2NpV3UrXM82R1rrKp-m8ylURma16wLVMns77Uk"
 export const LocationContextProvider: React.FC<Props> = (props: Props) => {
   const [loadingLocation, setLoadingLocation] = useState(false)
   const [locationIsFetched, setLocationIsFetched] = useState(false)
+  const [positionDenied, setPositionDenied] = useState(false)
   
     const checkDevicePosition =  () => {
       setLoadingLocation(true)
-      const deniedPos = () => {
 
+      const deniedPos = () => {
         setLoadingLocation(false)
-        throw new Error('det blev fel')
+        setPositionDenied(true)
       }
+
       navigator.geolocation.getCurrentPosition(async(pos) => {   
         
           const {latitude, longitude} = pos.coords
@@ -57,7 +61,8 @@ export const LocationContextProvider: React.FC<Props> = (props: Props) => {
     <LocationContext.Provider value={{
       checkDevicePosition,
       loadingLocation,
-      locationIsFetched
+      locationIsFetched,
+      positionDenied
     }}>
       {props.children}
     </LocationContext.Provider>

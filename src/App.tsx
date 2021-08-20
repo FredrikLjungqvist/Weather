@@ -10,9 +10,9 @@ import ForecastDetailView from './Pages/ForecastDetailView'
 import WeatherContext from './context/weather-context'
 import ErrorBoundary from './components/ErrorBoundary';
 import { Weather } from './context/weather-context'
-import ErrorModal from './components/UI/Modal'
+import IconModal from './components/UI/IconModal'
 
-export interface MyType {
+export interface SortedWeatherData {
   city: string
   date: string
   day: string
@@ -33,7 +33,7 @@ function App() {
   }, [])
   
   let groupedDates: Map<string, Weather[]>;
-  let dataToRender: MyType[] = [];
+  let dataToRender: SortedWeatherData[] = [];
   
   if(ctx.selectedForecast.length > 0){
     const groupBy = (list:Weather[], keyGetter: (item: Weather) => string) => {
@@ -85,7 +85,7 @@ function App() {
 
   return (
     <>
-      {modalIsOpen && <ErrorModal />} 
+      {modalIsOpen && <IconModal onClose={toggleModalHandler} />} 
       <Layout onToggle={toggleModalHandler} >
           <Switch>
           <Route path="/" exact>
@@ -93,16 +93,13 @@ function App() {
           </Route>
           <Route path="/stad/:cityName" exact>
             <ErrorBoundary>
-              <ForecastView  />
+              <ForecastView sortedData={dataToRender}  />
             </ErrorBoundary>
           </Route>
           <Route path="/stad/:cityName/datum/:currentDate">
-
-          <ErrorBoundary>
+            <ErrorBoundary>
             <ForecastDetailView sortedData={dataToRender} />
-          </ErrorBoundary>
-
-
+            </ErrorBoundary>
           </Route>
           <Route path="*">
             <NotFound />

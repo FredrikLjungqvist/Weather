@@ -6,7 +6,7 @@ import WeatherContext from '../../context/weather-context'
 import DetailForecastItem from './DetailForecastItem';
 import { useParams, useHistory } from 'react-router-dom'
 import { Weather } from '../../context/weather-context'
-import { MyType } from '../../App'
+import { SortedWeatherData } from '../../App'
 
 const useStyles = makeStyles({
   table: {
@@ -19,7 +19,7 @@ const useStyles = makeStyles({
 })
 
 type Props = {
-  sortedData: MyType[]
+  sortedData: SortedWeatherData[]
 }
 
 

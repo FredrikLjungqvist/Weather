@@ -1,12 +1,15 @@
 import React from 'react'
-
+import { SortedWeatherData } from '../App'
 import Forecast from '../components/weather/Forecast'
 
-const ForecastView = () => {
-
+type Props = {
+  sortedData: SortedWeatherData[]
+}
+const ForecastView:React.FC<Props> = (props) => {
+  
   return (
     <div>
-      <Forecast />
+      <Forecast sortedData={props.sortedData} />
     </div>
   )
 }

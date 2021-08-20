@@ -1,4 +1,3 @@
-import React from 'react'
 import {  Link, useParams} from "react-router-dom";
 import {Typography, CardContent, Card, makeStyles } from '@material-ui/core';
 
@@ -9,13 +8,7 @@ const useStyles = makeStyles({
     maxWidth: 150,
     textAlign: 'center',
     justifyContent: 'center',
-    flexWrap:'wrap'
-  },
-  cont: {
-    display: 'flex',
-    alignItems: 'center',
-    flexDirection: 'row',
-    flexWrap:'wrap'
+    flexWrap:'wrap',
   },
   link: {
     textDecoration: 'none',

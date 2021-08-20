@@ -1,13 +1,13 @@
 import DetailForecastList from '../components/weather/DetailForecastList'
 import React, { CSSProperties } from 'react'
-import { MyType } from '../App'
+import { SortedWeatherData } from '../App'
 const styles: CSSProperties = {
   display: "flex",
   flexDirection: "column",
 }
 
 type Props = {
-  sortedData: MyType[]
+  sortedData: SortedWeatherData[]
 }
 
 

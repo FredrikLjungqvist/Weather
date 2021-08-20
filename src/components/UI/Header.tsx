@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, CSSProperties } from 'react'
 import { AppBar, Toolbar, Typography, Container } from '@material-ui/core'
 import { NavLink } from 'react-router-dom'
 import Search from './CitySearch'
@@ -12,15 +12,9 @@ interface Props {
 export default class Header extends Component<Props> {
 
   render() {
-    const classes = {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "space-between"
-    }
-
     return (
-      <AppBar color="primary">
-        <Toolbar>
+      <AppBar style={{ zIndex: 1}} position="fixed" color="inherit">
+        <Toolbar style={{paddingLeft: 0, paddingRight:30}}>
           <Container style={classes} maxWidth="lg">
             <NavLink className={logoStyle.logo} to="/">
                 <Typography  variant="h3">
@@ -36,3 +30,8 @@ export default class Header extends Component<Props> {
   }
 }
 
+const classes:CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+}
