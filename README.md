@@ -1,7 +1,7 @@
 # VäderApp
 *A React app showing weather in a user friendly UI.*
 By: Fredrik Ljungqvist, Robin Holgersson, Ryan-Phillips Cornelio 
-
+Git Repo: https://github.com/FredrikLjungqvist/Weather/
 Before start, run npm i
 To start, run npm start
 ## Beskrivning
