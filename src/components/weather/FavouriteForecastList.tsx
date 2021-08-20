@@ -3,24 +3,32 @@ import WeatherContext from '../../context/weather-context'
 import { Weather } from '../../context/weather-context'
 import ForecastCard from './ForecastCard';
 
-
+interface DataToRender {
+  id: string;
+  city: string;
+  day: string;
+  date: string;
+  tempmin: number;
+  tempmax:  number;
+  symbol: number;
+}
 
 export default class FavouriteForecastList extends Component {
   static contextType = WeatherContext;
-  groupedDates:any;
-  dataToRender:any;
+  groupedDates!: Map<string, Weather[]>;
+  dataToRender!:DataToRender[];
 
 
-   private groupBy = (list:any, keyGetter:any) => {
-    const map = new Map();
-    list.forEach((item:any) => {
-         const key = keyGetter(item);
-         const collection = map.get(key);
-         if (!collection) {
-             map.set(key, [item]);  
-         } else {
-             collection.push(item);
-         }
+  groupBy = (list:Weather[], keyGetter: (item: Weather) => string) => {
+    const map = new Map<string, Weather[]>();
+    list.forEach((item:Weather) => {
+      const key = keyGetter(item);
+      const collection = map.get(key);
+      if (!collection) {
+        map.set(key, [item]);  
+      } else {
+        collection.push(item);
+      }
     });
     return map;
   }

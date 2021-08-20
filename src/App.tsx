@@ -99,10 +99,9 @@ function App() {
           <Route path="/stad/:cityName/datum/:currentDate">
 
           <ErrorBoundary>
-            <ForecastDetailView groupedData={dataToRender} />
-            </ErrorBoundary>
-
             <ForecastDetailView sortedData={dataToRender} />
+          </ErrorBoundary>
+
 
           </Route>
           <Route path="*">
