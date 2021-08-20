@@ -97,7 +97,13 @@ function App() {
             </ErrorBoundary>
           </Route>
           <Route path="/stad/:cityName/datum/:currentDate">
+
+          <ErrorBoundary>
+            <ForecastDetailView groupedData={dataToRender} />
+            </ErrorBoundary>
+
             <ForecastDetailView sortedData={dataToRender} />
+
           </Route>
           <Route path="*">
             <NotFound />
