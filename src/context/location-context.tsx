@@ -19,8 +19,9 @@ interface Props {
 export interface Position {
 address: { county: string, city: string}
 position: {lat: number, lng: number}
-
 }
+
+const apiKey = "V2olu2NpV3UrXM82R1rrKp-m8ylURma16wLVMns77Uk"
 
 export const LocationContextProvider: React.FC<Props> = (props: Props) => {
   const [loadingLocation, setLoadingLocation] = useState(false)
@@ -36,7 +37,7 @@ export const LocationContextProvider: React.FC<Props> = (props: Props) => {
       navigator.geolocation.getCurrentPosition(async(pos) => {   
         
           const {latitude, longitude} = pos.coords
-          const response = await fetch(`https://revgeocode.search.hereapi.com/v1/revgeocode?at=${latitude}%2C${longitude}&lang=se&apiKey=V2olu2NpV3UrXM82R1rrKp-m8ylURma16wLVMns77Uk`)
+          const response = await fetch(`https://revgeocode.search.hereapi.com/v1/revgeocode?at=${latitude}%2C${longitude}&lang=se&apiKey=${apiKey}`)
           const positionData = await response.json()
           const currentCity = positionData.items.map((pos:Position) => {
             return{
